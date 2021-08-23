@@ -1,0 +1,25 @@
+﻿@model Game
+
+<p>@ViewBag.Title</p>
+<br />
+
+<form asp-action="GuessingGame" method="post" role="form">
+    <div class="form-group">
+        <div>
+            <label asp-for="GuessInput">Guess the number 1-100 (Input whole number, no decimals):</label>
+            <br />
+            <input asp-for="GuessInput" type="number" value="" min="1" max="100" required />
+            <br />
+            <br />
+        </div>
+        <div>
+            @Html.Raw(ViewBag.buttonView)
+            
+        </div>
+    </div>
+</form>
+
+<br />
+<p>@ViewBag.resultMessage</p>
+
+

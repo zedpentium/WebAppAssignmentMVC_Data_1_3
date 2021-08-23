@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/bootstrap-5.0.2-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+    <div class="divwrapper">  <!-- start divwrapper-->
+
+        <header class="item-a">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary border-bottom" id="navmenubox">
+                <a class="navbar-brand text-info" id="menulogo" asp-controller="Info" asp-action="Home">
+                    <img alt="logo" src="@Url.Content("~/pictures/jrhlogobig.jpg")">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Info" asp-action="About">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Info" asp-action="Contact">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Info" asp-action="Projects">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/FeverCheck">FeverCheck</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/GuessingGame">GuessingGame</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div class="item-e">
+            @RenderBody()
+        </div>
+
+
+
+
+
+    </div> <!-- end divwrapper-->
+
+
+    <footer class="item-h">
+        <span>@DateTime.Now.ToString("yyyy/MM/dd") &#64;Eric "Zeddan" Rönnhult&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-primary" href="#">Back To Top</a></span>
+    </footer>
+
+
+
+</body>
+</html>
