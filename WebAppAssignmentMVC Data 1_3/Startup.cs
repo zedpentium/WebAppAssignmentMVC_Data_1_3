@@ -29,7 +29,7 @@ namespace WebAppAssignmentMVC_Data_1_3
 
             services.AddSession(options =>  // To use session state /ER
             {
-                options.Cookie.Name = ".EricRwebappmvc1_3.Session";
+                options.Cookie.Name = ".EricRwebappmvcdata1_3.Session";
                 options.IdleTimeout = TimeSpan.FromSeconds(300);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
@@ -75,7 +75,7 @@ namespace WebAppAssignmentMVC_Data_1_3
 
                 endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Info}/{action=Home}/{id?}");
+                pattern: "{controller=People}/{action=Home}/{id?}");
             });
         }
     }

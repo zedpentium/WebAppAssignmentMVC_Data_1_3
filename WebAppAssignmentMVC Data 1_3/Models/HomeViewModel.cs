@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using WebAppAssignmentMVC_Data_1_3;
 
 namespace WebAppAssignmentMVC_Data_1_3.Models
 {
-    public class Game
+    public class HomeViewModel
     {
-        public int GuessInput { get; set; }
-        public string btnSubmit { get; set; }
-        
+        public string FilterInput { get; set; }
+        public string btnFilter { get; set; }
 
-        private static int nrOfGuesses = 0;
-        private static int showNrOfGuessesAtWin = 0;
+        public string PersonName { get; set; }
+        public string PersonPhoneNr { get; set; }
+        public string PersonCity { get; set; }
+
+        //public IEnumerable<People> Peoples { get; set; }
 
 
-        public string CheckTheGuess(Game userFormInput, int theRndNr, out bool isItWin)
+
+       /* public string CheckTheSearch(Peoplelist userFormInput, int theRndNr, out bool isItWin)
         {
             string textMsg = "";
             isItWin = false;
@@ -34,11 +38,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
                 nrOfGuesses++;
                 textMsg = $"Your guessed {userFormInput.GuessInput} is to low, guess higher.\nYou guessed {nrOfGuesses} time(s).";
 
-            /*} else if (userFormInput.GuessInput < 1 || userFormInput.GuessInput > 100)
-            {
-                isItWin = false;
-                textMsg = $"Error! Your guessed {userFormInput.GuessInput} is to low, guess higher.\nYou guessed {nrOfGuesses} time(s).";
-            */
+
             }
             else if (userFormInput.GuessInput == theRndNr)
             {
@@ -52,6 +52,16 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
                 return textMsg;
         }
-    
+*/
+
+        /*public class People
+        {
+            public string Name { get; set; }
+            public string PhoneNr { get; set; }
+            public string City { get; set; }
+        }
+        */
+
+
     }
 }

@@ -1,0 +1,69 @@
+﻿@using WebAppAssignmentMVC_Data_1_3;
+@model HomeViewModel
+<div>
+    <h2>@ViewBag.Title</h2>
+    <br />
+    <h4>Eric R WebAppAssignmentMVC_Data_1_3</h4>
+
+ 
+<div class="flexwrap">
+<div>
+    <form asp-action="Filtersearch" method="post" role="form">
+        @Html.AntiForgeryToken()
+        <div>
+            <label asp-for="FilterInput">Filter list by search:</label>
+            <br />
+            <input asp-for="FilterInput" type="text" value="" required />
+            <br />
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary" name="btnFilter" value="Search" />
+        </div>
+    </form>
+</div>
+
+
+<div>
+    <form asp-action="CreatePerson" method="post" role="form">
+        @Html.AntiForgeryToken()
+        <div>
+            <label asp-for="PersonName">Name:</label>
+            <br />
+            <input asp-for="PersonName" type="text" value="" required />
+            <br />
+            <label asp-for="PersonPhoneNr">PhoneNumber:</label>
+            <br />
+            <input asp-for="PersonPhoneNr" type="text" value="" required />
+            <br />
+            <label asp-for="PersonCity">City:</label>
+            <br />
+            <input asp-for="PersonCity" type="text" value="" required />
+            <br />
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary" name="btnFilter" value="Add Person" />
+        </div>
+    </form>
+</div>
+    </div> <!-- end flexdiv -->
+
+    <br />
+    <p>@ViewBag.resultMessage</p>
+    <table>
+        <tr>
+            <td>NAME</td>
+            <td>PhoneNumber</td>
+            <td>City</td>
+        </tr>
+        <tr>
+            <td>Model.PersonName<a href="#" onClick="deleteRow();">Delete</a></td>
+            <td>Model.PersonPhoneNr<a href="#" onClick="deleteRow();">Delete</a></td>
+            <td>Model.PersonCity<a href="#" onClick="deleteRow();">Delete</a></td>
+        </tr>
+
+    </table>
+
+
+
+
+</div>
