@@ -9,7 +9,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
     {
 
 
-        public Person Create(string pName, string pPhonenumber, string pCity);
+        public Person Create(string PersonName, string PersonPhoneNumber, string PersonCity);
 
 
         public List<Person> Read();

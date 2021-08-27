@@ -10,91 +10,81 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
     public class PeopleController : Controller
     {
 
-        public IActionResult Home()
+        [HttpGet]
+        public IActionResult Index()
         {
-            ViewBag.Title = "Home of Eric R People List Page";
+            ViewBag.Title = "Eric R Project";
 
-            //PeopleService newPerson = new PeopleService();
-            //newPerson.All();
+            PeopleService peopleListView = new PeopleService();
 
-            return View();
-        }
+            InMemoryPeopleRepo peopleList = new InMemoryPeopleRepo();
 
-        private int _gameRndNr;
-        //const string SessionValueName = "_Value";
-
-        /*public IActionResult Filtersearch() // get / HttpGet
-        {
-            ViewBag.Title = "Welcome to Guessing game";
-            ViewBag.buttonView = "<input type = \"submit\" class=\"btn btn-primary\" name=\"btnSubmit\" value=\"Guess Number\">";
-
-            Random gRnd = new Random();
-            _gameRndNr = gRnd.Next(1, 101);
-
-            HttpContext.Session.SetInt32("GameNr", _gameRndNr);
-
-            return View();
-        }*/
-
-        /*[HttpPost]
-        public IActionResult Filtersearch(Game createCheck) // set / HttpPost
-        {
-            Game newObj = new Game();
-            bool isItWin = false;
-
-            if (ModelState.IsValid)
+            if (peopleList.Read().Count == 0)
             {
-                //Game[] inAn = Game[3];
-                string messageToView = newObj.CheckTheSearch(createCheck, (int)HttpContext.Session.GetInt32("GameNr"), out isItWin);
+                peopleList.CreateBasePersons();
 
-                if (isItWin)
-                {
-                    ViewBag.resultMessage = messageToView;
-                    ViewBag.peoplelist = "<input type = \"button\" class=\"btn btn-primary\" name=\"btnSubmit\" value=\"Play Again\" onClick = \"parent.location='/GuessingGame'\">";
-                    //RedirectToAction
-                    return View();
-                }
-                else
-                {
-
-                    ViewBag.peoplelist = "<input type = \"submit\" class=\"btn btn-primary\" name=\"btnSubmit\" value=\"Guess Number\">";
-                }
-
-                ViewBag.peoplelist = messageToView;
-
-                return View();
             }
 
-            return View(createCheck);
+            return View(peopleListView.All());
+        }
+
+        [HttpPost]
+        public IActionResult Index(PeopleViewModel viewModel)
+        {
+            PeopleService filterString = new PeopleService();
+
+            viewModel = filterString.FindBy(viewModel);
+
+            return View(viewModel);
+
+        }
+
+        /*[HttpPost]
+        public IActionResult Index(CreatePersonViewModel viewModel)
+        {
+            //PeopleService filterString = new PeopleService();
+
+            //viewModel = filterString.FindBy(viewModel);
+
+            return View(viewModel);
+
         }*/
 
 
+        /*public IActionResult CreatePerson() // set / HttpPost
+        {
+            CreatePersonViewModel returnView = new CreatePersonViewModel();
 
+            return View("Home", returnView);
+        }*/
 
 
         [HttpPost]
-        public IActionResult CreatePerson(Person createNewPerson) // set / HttpPost
+        public IActionResult CreatePerson(CreatePersonViewModel createNewPerson) // set / HttpPost
         {
-            //PeopleService newPerson = new PeopleService();
-            //newPerson.Add(createNewPerson);
+            //try
+            //{
+                if (ModelState.IsValid)
+                { 
+                    PeopleService newPerson = new PeopleService();
 
-            return View();
+                    newPerson.Add(createNewPerson);
+
+                    return RedirectToAction("Index", createNewPerson);
+                }
+
+            return RedirectToAction("Index", createNewPerson);
         }
 
 
-
-
-       /*     private List<People> GetPeopleList()
+        /*public IActionResult DeletePerson(int id) // set / HttpPost
         {
-            List<People> pList = new List<People>();
-            pList.Add(new People { Name = "Tejas Trivedi", PhoneNr = "0777 777777", City = "Tiesto" });
-            pList.Add(new People { Name = "Boose Bus", PhoneNr = "0777 777777", City = "Flen" });
-            pList.Add(new People { Name = "Kjell Kriminell", PhoneNr = "0777 777777", City = "Burg" });
-            return pList;
+            PeopleService deleteById = new PeopleService();
+            //InMemoryPeopleRepo deleteById = new InMemoryPeopleRepo();
+            deleteById.Remove(id);
+
+            return RedirectToAction(nameof(Home));
         }
-
-
         */
-
     }
 }

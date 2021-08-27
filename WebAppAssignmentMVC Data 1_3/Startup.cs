@@ -63,19 +63,15 @@ namespace WebAppAssignmentMVC_Data_1_3
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                name: "Guessgame",
-                pattern: "GuessingGame/{id?}",
-                defaults: new { controller = "Game", action = "GuessingGame" });
-
-                endpoints.MapControllerRoute(
-                name: "fevercheck",
-                pattern: "FeverCheck/{id?}",
-                defaults: new { controller = "Doctor", action = "FeverCheck" });
+                /*endpoints.MapControllerRoute(
+                name: "CreatePerson",
+                pattern: "Home/{id?}",
+                defaults: new { controller = "People", action = "Home" });*/
+                
 
                 endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=People}/{action=Home}/{id?}");
+                pattern: "{controller=People}/{action=Index}");
             });
         }
     }

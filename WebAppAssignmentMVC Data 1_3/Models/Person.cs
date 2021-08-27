@@ -13,12 +13,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         private string _personCity;
 
 
-        public Person(int id, string name, string number, string city)
+        public Person(int id, string pName, string pPhonenumber, string pCity)
         {
             this._personId = id;
-            PersonName = name;
-            PersonPhoneNumber = number;
-            PersonCity = city;
+            PersonName = pName;
+            PersonPhoneNumber = pPhonenumber;
+            PersonCity = pCity;
         }
 
         public int PersonId

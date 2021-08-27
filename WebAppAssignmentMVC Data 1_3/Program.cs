@@ -14,6 +14,8 @@ namespace WebAppAssignmentMVC_Data_1_3
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

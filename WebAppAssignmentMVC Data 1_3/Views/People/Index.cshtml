@@ -1,0 +1,95 @@
+﻿@model PeopleViewModel
+
+<div>
+    <h2>@ViewBag.Title</h2>
+    <br />
+    <h4>Eric R WebAppAssignmentMVC_Data_1_3</h4>
+
+    <div>
+        <br />
+        <P>@ViewBag.ErrorMess</P>
+        <br />
+    </div>
+
+    <div class="flexwrap">
+        <p>@Html.ValidationSummary(true, "", new { @class = "text-danger" })</p>
+        <div>
+
+            <form asp-action="Index" method="post" role="form">
+                @Html.AntiForgeryToken()
+                <h3><b>Filter list by search</b></h3>
+                <label asp-for="FilterString">Search for:</label>
+                <br />
+                <input asp-for="FilterString" required />
+                <br />
+                <span asp-validation-for="FilterString"></span>
+                <br />
+
+
+                <input type="submit" class="btn btn-primary" name="btnFilter" value="Search" />
+
+            </form>
+        </div>
+
+
+        <div>
+            <form asp-action="CreatePerson" method="post" role="form">
+                @Html.AntiForgeryToken()
+                <div>
+                    <h3><b>Create a new Person</b></h3>
+                    <label asp-for="PersonName"></label>
+                    <br />
+                    <input asp-for="PersonName" type="text" />
+                    <br />
+                    <span asp-validation-for="PersonName"></span>
+                    <br />
+                    <label asp-for="PersonPhoneNumber"></label>
+                    <br />
+                    <input asp-for="PersonPhoneNumber" type="tel" />
+                    <br />
+                    <span asp-validation-for="PersonPhoneNumber"></span>
+                    <br />
+                    <label asp-for="PersonCity"></label>
+                    <br />
+                    <input asp-for="PersonCity" type="text" />
+                    <br />
+                    <span asp-validation-for="PersonCity"></span>
+                    <br />
+                </div>
+                <div>
+                    <input type="submit" class="btn btn-primary" name="btnCreate" value="Add Person" />
+                </div>
+            </form>
+        </div>
+    </div> <!-- end flexdiv -->
+
+    <br />
+    <p>@ViewBag.resultMessage</p>
+    <div>
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>NAME</th>
+                    <th>PhoneNumber </th>
+                    <th>City </th>
+                    <th>Options </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.PeopleListView)
+                {
+                <tr>
+
+                    <td>@item.PersonName</td>
+                    <td>@item.PersonPhoneNumber</td>
+                    <td>@item.PersonCity</td>
+                    <!--<td>Model.Action<a href="#" onClick="@{/*item.PersonId;*/}">Delete</a></td>-->
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>
