@@ -31,11 +31,11 @@ body{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .flexwrap > div {
-    width: 490px;
+    width: 450px;
     height: 350px;
     border: 2px solid black;
     border-radius: 10px;

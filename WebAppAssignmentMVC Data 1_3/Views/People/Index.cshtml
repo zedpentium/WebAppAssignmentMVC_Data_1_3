@@ -7,12 +7,16 @@
 
     <div>
         <br />
-        <P>@ViewBag.ErrorMess</P>
+        <P>@ViewBag.Mess</P>
         <br />
     </div>
 
+    <p>
+
+    </p>
+
     <div class="flexwrap">
-        <p>@Html.ValidationSummary(true, "", new { @class = "text-danger" })</p>
+
         <div>
 
             <form asp-action="Index" method="post" role="form">
@@ -78,14 +82,16 @@
             <tbody>
                 @foreach (var item in Model.PeopleListView)
                 {
-                <tr>
+                    <tr>
 
-                    <td>@item.PersonName</td>
-                    <td>@item.PersonPhoneNumber</td>
-                    <td>@item.PersonCity</td>
-                    <!--<td>Model.Action<a href="#" onClick="@{/*item.PersonId;*/}">Delete</a></td>-->
-                </tr>
+                        <td>@item.PersonName</td>
+                        <td>@item.PersonPhoneNumber</td>
+                        <td>@item.PersonCity</td>
+                        <!--<td>Model.Action<a href="#" onClick="@{/*item.PersonId;*/}">Delete</a></td>-->
+                    </tr>
                 }
+
+                
             </tbody>
         </table>
     </div>

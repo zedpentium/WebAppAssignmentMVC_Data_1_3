@@ -14,9 +14,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         public void CreateBasePersons()
         {
             InMemoryPeopleRepo pDataBase = new InMemoryPeopleRepo();
-            pDataBase.Create("Tejas Trivedi", "0777 777777", "Tiesto");
+            pDataBase.Create("Eric Rönnhult", "0777 777777", "Tiesto");
             pDataBase.Create("Bosse Bus", "0777 777777", "Flen");
             pDataBase.Create("Kjell Kriminell", "0777 777777", "Burg");
+            pDataBase.Create("Anders Rolle", "0777 777777", "Götet");
         }
 
         public Person Create(string PersonName, string PersonPhoneNumber, string PersonCity)
@@ -36,13 +37,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public List<Person> Read()
         {
-            
             return _pList;
         }
 
         public Person Read(int id)
         {
-            //Person foundObjIndex = Array.Find(_pList, id => id.PersonId == personId);
+            //Person findPersonById = List<Person>.Find(_pList, id => id.PersonId == personId);
             throw new NotImplementedException();
         }
 
