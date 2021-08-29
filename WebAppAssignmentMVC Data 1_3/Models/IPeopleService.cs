@@ -7,8 +7,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 {
     interface IPeopleService
     {
-
-
         public Person Add(CreatePersonViewModel person);
 
         public PeopleViewModel All();
@@ -20,9 +18,5 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         public Person Edit(int id, Person person);
 
         public bool Remove(int id);
-
-
-
-
     }
 }

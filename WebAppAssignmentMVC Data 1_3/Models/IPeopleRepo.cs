@@ -7,8 +7,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 {
     interface IPeopleRepo
     {
-
-
         public Person Create(string PersonName, string PersonPhoneNumber, string PersonCity);
 
 
@@ -22,7 +20,5 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
 
         public bool Delete(Person person);
-
-
     }
 }

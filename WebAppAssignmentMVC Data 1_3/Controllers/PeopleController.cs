@@ -15,16 +15,19 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         {
             ViewBag.Title = "Eric R Project";
 
-            PeopleService peopleListView = new PeopleService();
-            InMemoryPeopleRepo peopleList = new InMemoryPeopleRepo();
+            PeopleService checkListView = new PeopleService();
+            PeopleViewModel peopleList = new PeopleViewModel();
 
-            if (peopleList.Read().Count == 0)
+            InMemoryPeopleRepo makeBaseList = new InMemoryPeopleRepo(); // to generate 4 persons in Repo
+
+            peopleList.PeopleListView = checkListView.All().PeopleListView;
+
+            if (peopleList.PeopleListView.Count == 0 || peopleList.PeopleListView == null)
             {
-                peopleList.CreateBasePersons();
-
+                makeBaseList.CreateBasePersons();
             }
 
-            return View(peopleListView.All());
+            return View(peopleList);
         }
 
         [HttpPost]
@@ -33,55 +36,53 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
             PeopleService filterString = new PeopleService();
 
             viewModel = filterString.FindBy(viewModel);
-
-            return View(viewModel);
-
-        }
-
-        /*[HttpPost]
-        public IActionResult Index(CreatePersonViewModel createViewModel)
-        {
-            PeopleService peopleListView = new PeopleService();
-
-            return View(createViewModel);
+                return View(viewModel); 
+                
 
         }
-        */
 
-        /*public IActionResult CreatePerson() // set / HttpPost
-        {
-            return View("Index");
-        }*/
-        
 
         [HttpPost]
-        public IActionResult CreatePerson(CreatePersonViewModel  personViewModel) // set / HttpPost
+        public IActionResult CreatePerson(CreatePersonViewModel personViewModel) // set / HttpPost
         {
-            //try
-            //{
-                if (ModelState.IsValid)
-                { 
-                    PeopleService newPerson = new PeopleService();
 
-                    newPerson.Add(personViewModel);
+            var newModel = new PeopleViewModel();
+            PeopleService repoList = new PeopleService();
 
-                ViewBag.Mess = "Person Added!";
+            if (ModelState.IsValid)
+                {
 
-                    return RedirectToAction("Index");
+                newModel.PersonName = personViewModel.PersonName;
+                newModel.PersonPhoneNumber = personViewModel.PersonPhoneNumber;
+                newModel.PersonCity = personViewModel.PersonCity;
+
+                newModel.PeopleListView = repoList.All().PeopleListView;
+
+
+                repoList.Add(personViewModel);
+
+                    ViewBag.Mess = "Person Added!";
+
+                    return View("Index", newModel);
                 }
 
-            return RedirectToAction("index", personViewModel);
+            newModel.PersonName = personViewModel.PersonName;
+            newModel.PersonPhoneNumber = personViewModel.PersonPhoneNumber;
+            newModel.PersonCity = personViewModel.PersonCity;
+
+            newModel.PeopleListView = repoList.All().PeopleListView;
+
+            return View("index", newModel);
         }
 
 
-        /*public IActionResult DeletePerson(int id) // set / HttpPost
+        public IActionResult DeletePerson(int id)
         {
             PeopleService deleteById = new PeopleService();
-            //InMemoryPeopleRepo deleteById = new InMemoryPeopleRepo();
             deleteById.Remove(id);
 
-            return RedirectToAction(nameof(Home));
+            return RedirectToAction("Index");
         }
-        */
+        
     }
 }

@@ -17,11 +17,9 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public PeopleViewModel All()
         {
-            PeopleViewModel pViewMod = new PeopleViewModel();
+            InMemoryPeopleRepo pRepoList = new InMemoryPeopleRepo(); 
             
-            InMemoryPeopleRepo pRepoList = new InMemoryPeopleRepo();
-
-            pViewMod.PeopleListView = pRepoList.Read();
+            PeopleViewModel pViewMod = new PeopleViewModel() { PeopleListView = pRepoList.Read() };  
 
             return pViewMod;
         }
@@ -38,6 +36,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         {
             InMemoryPeopleRepo loadListForSearch = new InMemoryPeopleRepo();
 
+            search.PeopleListView.Clear();
+
             foreach (Person item in loadListForSearch.Read())
             {
                 if (item.PersonName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase) || item.PersonCity.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase))
@@ -49,8 +49,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
             if (search.PeopleListView.Count == 0)
             {
-                Person tempEmtpyListMessage = new Person(0, "No Person or City could be found", "", "");
-                search.PeopleListView.Add(tempEmtpyListMessage);
+                search.SearchResultEmpty = $"No Person or City could be found, matching \"{search.FilterString}\" ";
+            } else
+            {
+                search.SearchResultEmpty = "";
             }
 
             return search;
@@ -64,10 +66,11 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public bool Remove(int id)
         {
-            //InMemoryPeopleRepo createAndStorePerson = new InMemoryPeopleRepo();
-            //Person madePerson = createAndStorePerson.Delete(person.PersonName, person.PersonPhoneNumber, person.PersonCity);
+            InMemoryPeopleRepo deletePersonFromRepo = new InMemoryPeopleRepo();
+            Person personToDelete = deletePersonFromRepo.Read(id);
+            deletePersonFromRepo.Delete(personToDelete);
 
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

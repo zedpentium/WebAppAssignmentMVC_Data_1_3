@@ -30,14 +30,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         {
             get { return _personName; }
             set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("The in-value are Null/Empty or whitespace. Will not be stored.");
-                }
-
-                _personName = value;
-            }
+            { _personName = value; }
         }
 
 
@@ -45,28 +38,14 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         {
             get { return _personPhoneNumber; }
             set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("The in-value are Null/Empty or whitespace. Will not be stored.");
-                }
-
-                _personPhoneNumber = value;
-            }
+            { _personPhoneNumber = value; }
         }
 
         public string PersonCity
         {
             get { return _personCity; }
             set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("The in-value are Null/Empty or whitespace. Will not be stored.");
-                }
-
-                _personCity = value;
-            }
+            {_personCity = value; }
         }
         
 

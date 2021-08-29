@@ -22,17 +22,16 @@
             <form asp-action="Index" method="post" role="form">
                 @Html.AntiForgeryToken()
                 <h3><b>Filter list by search</b></h3>
-                <label asp-for="FilterString">Search for:</label>
+                <label asp-for="FilterString"></label>
                 <br />
                 <input asp-for="FilterString" required />
                 <br />
-                <span asp-validation-for="FilterString"></span>
                 <br />
-
-
                 <input type="submit" class="btn btn-primary" name="btnFilter" value="Search" />
-
             </form>
+            <br />
+            <br />
+            <input type="button" class="btn btn-primary" name="btnReset" value="Reset Search" onClick="location.href='@Url.Action("Index", "People")'" />
         </div>
 
 
@@ -43,21 +42,21 @@
                     <h3><b>Create a new Person</b></h3>
                     <label asp-for="PersonName"></label>
                     <br />
-                    <input asp-for="PersonName" type="text" />
+                    <input asp-for="PersonName" />
                     <br />
-                    <span asp-validation-for="PersonName"></span>
+                    <span id="redtext" asp-validation-for="PersonName"></span>
                     <br />
                     <label asp-for="PersonPhoneNumber"></label>
                     <br />
-                    <input asp-for="PersonPhoneNumber" type="tel" />
+                    <input asp-for="PersonPhoneNumber" />
                     <br />
-                    <span asp-validation-for="PersonPhoneNumber"></span>
+                    <span id="redtext" asp-validation-for="PersonPhoneNumber"></span>
                     <br />
                     <label asp-for="PersonCity"></label>
                     <br />
-                    <input asp-for="PersonCity" type="text" />
+                    <input asp-for="PersonCity" />
                     <br />
-                    <span asp-validation-for="PersonCity"></span>
+                    <span id="redtext" asp-validation-for="PersonCity"></span>
                     <br />
                 </div>
                 <div>
@@ -68,34 +67,38 @@
     </div> <!-- end flexdiv -->
 
     <br />
-    <p>@ViewBag.resultMessage</p>
     <div>
         <table class="table table-dark">
             <thead>
+
                 <tr>
                     <th>NAME</th>
                     <th>PhoneNumber </th>
                     <th>City </th>
                     <th>Options </th>
                 </tr>
+                <tr>
+                    <th>@Model.SearchResultEmpty</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
+
                 @foreach (var item in Model.PeopleListView)
                 {
                     <tr>
-
                         <td>@item.PersonName</td>
                         <td>@item.PersonPhoneNumber</td>
                         <td>@item.PersonCity</td>
-                        <!--<td>Model.Action<a href="#" onClick="@{/*item.PersonId;*/}">Delete</a></td>-->
+                        <td><a href="#" onClick="location.href='@Url.Action("DeletePerson", "People", new { id = @item.PersonId })'">Delete</a></td>
                     </tr>
                 }
 
-                
+
             </tbody>
         </table>
     </div>
-
-
 
 </div>

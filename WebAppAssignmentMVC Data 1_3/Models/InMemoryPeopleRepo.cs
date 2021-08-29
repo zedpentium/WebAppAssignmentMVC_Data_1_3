@@ -32,7 +32,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public bool Delete(Person person)
         {
-            throw new NotImplementedException();
+            _pList.Remove(person);
+            return true;
         }
 
         public List<Person> Read()
@@ -42,8 +43,9 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public Person Read(int id)
         {
-            //Person findPersonById = List<Person>.Find(_pList, id => id.PersonId == personId);
-            throw new NotImplementedException();
+            Person findPersonById = _pList.Find(idNr => idNr.PersonId == id);
+
+            return findPersonById;
         }
 
         public Person Update(Person person)

@@ -41,6 +41,10 @@ body{
     border-radius: 10px;
 }
 
+.flexwrap #redtext {
+    background-color: #000000;
+    color: #EA4747;
+}
 
 
 #menulogo {
