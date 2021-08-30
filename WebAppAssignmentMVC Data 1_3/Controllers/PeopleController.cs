@@ -10,6 +10,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
     public class PeopleController : Controller
     {
 
+        public PartialViewResult PersonList()
+        {
+            return PartialView("_PeopleListPartial");
+        }
+
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -37,8 +43,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 
             viewModel = filterString.FindBy(viewModel);
                 return View(viewModel); 
-                
-
         }
 
 

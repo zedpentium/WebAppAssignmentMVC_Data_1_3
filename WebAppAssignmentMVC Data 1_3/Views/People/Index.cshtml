@@ -68,37 +68,9 @@
 
     <br />
     <div>
-        <table class="table table-dark">
-            <thead>
-
-                <tr>
-                    <th>NAME</th>
-                    <th>PhoneNumber </th>
-                    <th>City </th>
-                    <th>Options </th>
-                </tr>
-                <tr>
-                    <th>@Model.SearchResultEmpty</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-
-                @foreach (var item in Model.PeopleListView)
-                {
-                    <tr>
-                        <td>@item.PersonName</td>
-                        <td>@item.PersonPhoneNumber</td>
-                        <td>@item.PersonCity</td>
-                        <td><a href="#" onClick="location.href='@Url.Action("DeletePerson", "People", new { id = @item.PersonId })'">Delete</a></td>
-                    </tr>
-                }
-
-
-            </tbody>
-        </table>
+        @{
+        }
+        <partial name="_PeopleListPartial" model="Model.PeopleListView" />  
     </div>
 
 </div>
