@@ -6,20 +6,29 @@
 }
 
 function getPersonByID() {
-    var idNr = "document.getElementById('IdInput').value";
-    $.post("/Ajax/FindPersonById", idNr, function (data) {
+    var idNr = document.getElementById('IdInput').value;
+    $.post("/Ajax/FindPersonById", {Id: idNr}, function (data) {
         $("#peopleviewlist").html(data);
     });
+
     document.getElementById("jsmessage").textContent = "One Person fetched by ID.";
 }
 
 function deletePersonById() {
     var idNr = document.getElementById('IdInput').value;
+    $.post("/Ajax/DeletePersonById", { Id: idNr }, function (data) {
+        $("#peopleviewlist").html(data);
+    })
+        .done(function () {
+            document.getElementById("jsmessage").textContent = "Person is now Deleted.";
+        })
+        .fail(function () {
+            document.getElementById("jsmessage").textContent = "FAILED to Delete Person. (Does not exist).";
+        })
+        .error(function () {
+            document.getElementById("jsmessage").textContent = "Some error has occured.";
+        });
 
-    $.post("/Ajax/DeletePersonById", function (data, success) {
-        $("#peopleviewlist").html(data, success);
-    });
-    document.getElementById("jsmessage").textContent = "One Person Deleted by ID.";
 }
 
 

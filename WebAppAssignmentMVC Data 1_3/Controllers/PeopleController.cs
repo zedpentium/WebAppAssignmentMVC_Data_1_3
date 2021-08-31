@@ -35,7 +35,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Index(PeopleViewModel viewModel)
         {
             PeopleService filterString = new PeopleService();
@@ -46,7 +45,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult CreatePerson(CreatePersonViewModel personViewModel) // set / HttpPost
         {
 

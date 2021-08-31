@@ -65,7 +65,7 @@ namespace WebAppAssignmentMVC_Data_1_3
             {
                 endpoints.MapControllerRoute(
                 name: "AjaxSPA",
-                pattern: "ajax/{id?}",
+                pattern: "Ajax/{id?}",
                 defaults: new { controller = "Ajax", action = "Index" });
                 
 

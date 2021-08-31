@@ -32,8 +32,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public bool Delete(Person person)
         {
-            _pList.Remove(person);
-            return true;
+            bool success = _pList.Remove(person);
+            return success;
         }
 
         public List<Person> Read()

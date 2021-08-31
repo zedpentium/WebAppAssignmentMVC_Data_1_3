@@ -71,9 +71,9 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         {
             InMemoryPeopleRepo deletePersonFromRepo = new InMemoryPeopleRepo();
             Person personToDelete = deletePersonFromRepo.Read(id);
-            deletePersonFromRepo.Delete(personToDelete);
+            bool success = deletePersonFromRepo.Delete(personToDelete);
 
-            return true;
+            return success;
         }
     }
 }

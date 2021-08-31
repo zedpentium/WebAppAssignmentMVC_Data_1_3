@@ -28,11 +28,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult FindPersonById(string id)
+        public IActionResult FindPersonById(int id)
         {
             PeopleService filterString = new PeopleService();
-            Person foundPerson = filterString.FindBy(2);//(Convert.ToInt32(id));
+            Person foundPerson = filterString.FindBy(id);
 
             if (foundPerson != null)
             {
@@ -46,20 +45,17 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeletePersonById(string id)
+        public IActionResult DeletePersonById(int id)
         {
             PeopleService filterString = new PeopleService();
-            bool isItDone = filterString.Remove(Convert.ToInt32(id));
+            bool success = filterString.Remove(id);
 
-            /*if (!isItDone)
+            if (success)
             {
-                List<Person> addPerson = new List<Person>();
-                addPerson.Add(foundPerson);
-                return PartialView("_PeopleListPartial", addPerson);
-            }*/
+                return StatusCode(200);
+            }
 
-            return Ok(); //PartialView("_PeopleListPartial");
+            return StatusCode(404);
 
         }
 
