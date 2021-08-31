@@ -61,7 +61,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public Person FindBy(int id)
         {
-            throw new NotImplementedException();
+            InMemoryPeopleRepo findPersonById = new InMemoryPeopleRepo();
+            Person foundPerson = findPersonById.Read(id);
+
+            return foundPerson;
         }
 
         public bool Remove(int id)

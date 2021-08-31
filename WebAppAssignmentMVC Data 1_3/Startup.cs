@@ -63,10 +63,10 @@ namespace WebAppAssignmentMVC_Data_1_3
 
             app.UseEndpoints(endpoints =>
             {
-                /*endpoints.MapControllerRoute(
-                name: "CreatePerson",
-                pattern: "Home/{id?}",
-                defaults: new { controller = "People", action = "Home" });*/
+                endpoints.MapControllerRoute(
+                name: "AjaxSPA",
+                pattern: "ajax/{id?}",
+                defaults: new { controller = "Ajax", action = "Index" });
                 
 
                 endpoints.MapControllerRoute(

@@ -3,17 +3,12 @@
 <div>
     <h2>@ViewBag.Title</h2>
     <br />
-    <h4>Eric R WebAppAssignmentMVC_Data_1_3</h4>
+    <h4>Eric R WebAppAssignmentMVC_Data_2</h4>
 
     <div>
         <br />
-        <P>@ViewBag.Mess</P>
-        <br />
+        <P id="actionMessage">@ViewBag.Mess</P>
     </div>
-
-    <p>
-
-    </p>
 
     <div class="flexwrap">
 
@@ -64,13 +59,14 @@
                 </div>
             </form>
         </div>
+
     </div> <!-- end flexdiv -->
 
     <br />
     <div>
         @{
         }
-        <partial name="_PeopleListPartial" model="Model.PeopleListView" />  
+        <partial name="_PeopleListPartial" model="Model.PeopleListView" />
     </div>
 
 </div>

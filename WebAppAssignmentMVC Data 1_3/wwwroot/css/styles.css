@@ -8,14 +8,14 @@ body{
     box-sizing: border-box;
 }
 
-#vsrenderbody {
+/*#vsrenderbody {
     width: 1024px;
     height: 800px;
     margin: 0 auto;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-}
+}*/
 
 #findushere {
   position: relative;
@@ -46,11 +46,29 @@ body{
     color: #EA4747;
 }
 
+    .flexwrap2 > div {
+        width: 450px;
+        height: 200px;
+        border: 2px solid black;
+        border-radius: 10px;
+    }
+
+    .flexwrap2 #redtext {
+        background-color: #000000;
+        color: #EA4747;
+    }
+
+#jsmessage {
+    background-color: #222212;
+    color: #EA4747;
+    height: 40px;
+}
+
 
 #menulogo {
-  height: 56px;
-  margin-right: auto;
-  padding: 0px;
+    height: 56px;
+    margin-right: auto;
+    padding: 0px;
 }
 
 #menulogo img {
@@ -121,7 +139,7 @@ body{
     background-color: #87898A;
     display: grid;
     grid-template-columns: 141px 541px 342px;
-    grid-template-rows: 56px 850px 10px 50px;
+    grid-template-rows: 56px 1250px 10px 50px;
     grid-template-areas:
         'navbararea navbararea navbararea'
         'contentarea contentarea contentarea'
@@ -203,4 +221,8 @@ margin-left: auto;
 #boxroundcorners {
     border: 2px solid black;
     border-radius: 10px;
+}
+
+#actionMessage {
+    border: 2px solid black;
 }

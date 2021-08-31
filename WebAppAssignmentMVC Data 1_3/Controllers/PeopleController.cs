@@ -19,14 +19,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.Title = "Eric R Project";
+            //ViewBag.Title = "Eric R Project";
 
             PeopleService checkListView = new PeopleService();
-            PeopleViewModel peopleList = new PeopleViewModel();
+            PeopleViewModel peopleList = new PeopleViewModel() { PeopleListView = checkListView.All().PeopleListView };
 
             InMemoryPeopleRepo makeBaseList = new InMemoryPeopleRepo(); // to generate 4 persons in Repo
-
-            peopleList.PeopleListView = checkListView.All().PeopleListView;
 
             if (peopleList.PeopleListView.Count == 0 || peopleList.PeopleListView == null)
             {
@@ -37,6 +35,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(PeopleViewModel viewModel)
         {
             PeopleService filterString = new PeopleService();
@@ -47,6 +46,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult CreatePerson(CreatePersonViewModel personViewModel) // set / HttpPost
         {
 
@@ -87,6 +87,9 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 
             return RedirectToAction("Index");
         }
-        
+
+
     }
+
+
 }
