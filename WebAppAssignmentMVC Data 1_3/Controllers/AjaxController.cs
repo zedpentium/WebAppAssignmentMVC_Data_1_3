@@ -40,7 +40,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
                 return PartialView("_PeopleListPartial", addPerson);
             }
 
-            return PartialView("_PeopleListPartial");
+            return StatusCode(404);//PartialView("_PeopleListPartial");
 
         }
 

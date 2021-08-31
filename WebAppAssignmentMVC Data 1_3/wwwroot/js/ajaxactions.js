@@ -9,9 +9,14 @@ function getPersonByID() {
     var idNr = document.getElementById('IdInput').value;
     $.post("/Ajax/FindPersonById", {Id: idNr}, function (data) {
         $("#peopleviewlist").html(data);
-    });
+    })
+        .done(function () {
+            document.getElementById("jsmessage").textContent = "One Person fetched by ID.";
+        })
+        .fail(function () {
+            document.getElementById("jsmessage").textContent = "FAILED to find Person. (Does not exist).";
+        });
 
-    document.getElementById("jsmessage").textContent = "One Person fetched by ID.";
 }
 
 function deletePersonById() {
