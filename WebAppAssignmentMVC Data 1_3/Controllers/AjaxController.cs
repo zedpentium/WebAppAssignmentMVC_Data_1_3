@@ -10,6 +10,14 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
     public class AjaxController : Controller
     {
+        //All new PeopleService() is now replaced by DI via this Constructor, and using _peopleService instead /ER
+        private readonly IPeopleService _peopleService;
+
+        public AjaxController(IPeopleService peopleService)
+        {
+            _peopleService = peopleService;
+        }
+
 
         [HttpGet]
         public IActionResult Index()
@@ -20,8 +28,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         [HttpGet]
         public IActionResult AllPeopleList()
         {
-            PeopleService checkListView = new PeopleService();
-            List<Person> peopleList = checkListView.All().PeopleListView;
+            //PeopleService checkListView = new PeopleService();
+            List<Person> peopleList = _peopleService.All().PeopleListView;
 
             return PartialView("_PeopleListPartial", peopleList);
 
@@ -30,8 +38,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         [HttpPost]
         public IActionResult FindPersonById(int id)
         {
-            PeopleService filterString = new PeopleService();
-            Person foundPerson = filterString.FindBy(id);
+            //PeopleService filterString = new PeopleService();
+            Person foundPerson = _peopleService.FindBy(id);
 
             if (foundPerson != null)
             {
@@ -40,15 +48,15 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
                 return PartialView("_PeopleListPartial", addPerson);
             }
 
-            return StatusCode(404);//PartialView("_PeopleListPartial");
+            return StatusCode(404);
 
         }
 
         [HttpPost]
         public IActionResult DeletePersonById(int id)
         {
-            PeopleService filterString = new PeopleService();
-            bool success = filterString.Remove(id);
+            //PeopleService filterString = new PeopleService();
+            bool success = _peopleService.Remove(id);
 
             if (success)
             {

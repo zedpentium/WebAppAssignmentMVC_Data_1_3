@@ -7,10 +7,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 {
     public class InMemoryPeopleRepo : IPeopleRepo
     {
-        private static List<Person> _pList = new List<Person>();
+        private static readonly List<Person> _pList = new List<Person>();
         private static int _idCounter;
 
-
+        
         public void CreateBasePersons()
         {
             InMemoryPeopleRepo pDataBase = new InMemoryPeopleRepo();
@@ -30,11 +30,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
             return newPerson;
         }
 
-        public bool Delete(Person person)
-        {
-            bool success = _pList.Remove(person);
-            return success;
-        }
 
         public List<Person> Read()
         {
@@ -51,6 +46,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         public Person Update(Person person)
         {
             throw new NotImplementedException();
+        }
+
+        public bool Delete(Person person)
+        {
+            bool success = _pList.Remove(person);
+            return success;
         }
     }
 }

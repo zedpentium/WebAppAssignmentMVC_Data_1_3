@@ -10,6 +10,14 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
     public class PeopleController : Controller
     {
 
+        //All new PeopleService() is now replaced by DI via this Constructor, and using _peopleService instead /ER
+        private readonly IPeopleService _peopleService;
+
+        public PeopleController(IPeopleService peopleService)
+        {
+            _peopleService = peopleService;
+        }
+
         public PartialViewResult PersonList()
         {
             return PartialView("_PeopleListPartial");
@@ -21,8 +29,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         {
             //ViewBag.Title = "Eric R Project";
 
-            PeopleService checkListView = new PeopleService();
-            PeopleViewModel peopleList = new PeopleViewModel() { PeopleListView = checkListView.All().PeopleListView };
+            //PeopleService checkListView = new PeopleService(); 
+            PeopleViewModel peopleList = new PeopleViewModel() { PeopleListView = _peopleService.All().PeopleListView };
 
             InMemoryPeopleRepo makeBaseList = new InMemoryPeopleRepo(); // to generate 4 persons in Repo
 
@@ -37,9 +45,9 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         [HttpPost]
         public IActionResult Index(PeopleViewModel viewModel)
         {
-            PeopleService filterString = new PeopleService();
+            //PeopleService filterString = new PeopleService();
 
-            viewModel = filterString.FindBy(viewModel);
+            viewModel = _peopleService.FindBy(viewModel);
                 return View(viewModel); 
         }
 
@@ -49,7 +57,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         {
 
             var newModel = new PeopleViewModel();
-            PeopleService repoList = new PeopleService();
+            //PeopleService repoList = new PeopleService();
 
             if (ModelState.IsValid)
                 {
@@ -58,10 +66,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
                 newModel.PersonPhoneNumber = personViewModel.PersonPhoneNumber;
                 newModel.PersonCity = personViewModel.PersonCity;
 
-                newModel.PeopleListView = repoList.All().PeopleListView;
+                newModel.PeopleListView = _peopleService.All().PeopleListView;
 
 
-                repoList.Add(personViewModel);
+                _peopleService.Add(personViewModel);
 
                     ViewBag.Mess = "Person Added!";
 
@@ -72,7 +80,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
             newModel.PersonPhoneNumber = personViewModel.PersonPhoneNumber;
             newModel.PersonCity = personViewModel.PersonCity;
 
-            newModel.PeopleListView = repoList.All().PeopleListView;
+            newModel.PeopleListView = _peopleService.All().PeopleListView;
 
             return View("index", newModel);
         }
@@ -80,8 +88,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 
         public IActionResult DeletePerson(int id)
         {
-            PeopleService deleteById = new PeopleService();
-            deleteById.Remove(id);
+            //PeopleService deleteById = new PeopleService();
+            _peopleService.Remove(id);
 
             return RedirectToAction("Index");
         }

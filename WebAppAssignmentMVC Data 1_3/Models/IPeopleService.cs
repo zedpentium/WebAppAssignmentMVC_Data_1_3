@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 
 namespace WebAppAssignmentMVC_Data_1_3.Models
 {
-    interface IPeopleService
+    public interface IPeopleService
     {
-        public Person Add(CreatePersonViewModel person);
+        Person Add(CreatePersonViewModel person);
 
-        public PeopleViewModel All();
+        PeopleViewModel All();
 
-        public PeopleViewModel FindBy(PeopleViewModel search);
+        PeopleViewModel FindBy(PeopleViewModel search);
 
-        public Person FindBy(int id);
+        Person FindBy(int id);
 
-        public Person Edit(int id, Person person);
+        Person Edit(int id, Person person);
 
-        public bool Remove(int id);
+        bool Remove(int id);
     }
 }

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAppAssignmentMVC_Data_1_3.Models;
 
 namespace WebAppAssignmentMVC_Data_1_3
 {
@@ -34,6 +35,9 @@ namespace WebAppAssignmentMVC_Data_1_3
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+            services.AddScoped<IPeopleRepo, InMemoryPeopleRepo>();
+            services.AddScoped<IPeopleService, PeopleService>();
 
             //services.AddRazorPages();
         }
