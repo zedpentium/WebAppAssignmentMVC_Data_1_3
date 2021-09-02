@@ -22,7 +22,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public Person Create(string PersonName, string PersonPhoneNumber, string PersonCity)
         {
-            Person newPerson = new Person(_idCounter, PersonName, PersonPhoneNumber, PersonCity);
+            //Person newPerson = new Person(_idCounter, PersonName, PersonPhoneNumber, PersonCity);
+            Person newPerson = new Person(PersonName, PersonPhoneNumber, PersonCity); // removed _idCounter to run program
             _pList.Add(newPerson);
 
             _idCounter++;

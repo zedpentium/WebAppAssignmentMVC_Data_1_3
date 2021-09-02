@@ -1,51 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace WebAppAssignmentMVC_Data_1_3.Models
 {
     public class Person
     {
-        private readonly int _personId;
+
+        private int _personId;
         private string _personName;
         private string _personPhoneNumber;
         private string _personCity;
 
 
-        public Person(int id, string pName, string pPhonenumber, string pCity)
+        public Person(string PersonName, string PersonPhoneNumber, string PersonCity)
         {
-            this._personId = id;
-            PersonName = pName;
-            PersonPhoneNumber = pPhonenumber;
-            PersonCity = pCity;
+            //this.PersonId = PersonId;
+            this.PersonName = PersonName;
+            this.PersonPhoneNumber = PersonPhoneNumber;
+            this.PersonCity = PersonCity;
         }
 
+        [Key]
         public int PersonId
         {
             get { return _personId; }
+            set { _personId = value; }
         }
 
         public string PersonName
         {
             get { return _personName; }
-            set
-            { _personName = value; }
+            set { _personName = value; }
         }
 
 
         public string PersonPhoneNumber
         {
             get { return _personPhoneNumber; }
-            set
-            { _personPhoneNumber = value; }
+            set { _personPhoneNumber = value; }
         }
 
         public string PersonCity
         {
             get { return _personCity; }
-            set
-            {_personCity = value; }
+            set {_personCity = value; }
         }
         
 

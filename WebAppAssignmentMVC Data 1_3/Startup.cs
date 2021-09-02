@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppAssignmentMVC_Data_1_3.Models;
+using WebAppAssignmentMVC_Data_1_3.Data;
 
 namespace WebAppAssignmentMVC_Data_1_3
 {
@@ -36,7 +38,10 @@ namespace WebAppAssignmentMVC_Data_1_3
                 options.Cookie.IsEssential = true;
             });
 
-            services.AddScoped<IPeopleRepo, InMemoryPeopleRepo>();
+            services.AddDbContext<PeopleListContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("PeopleDb")));
+
+            services.AddScoped<IPeopleRepo, DatabasePeopleRepo>();
             services.AddScoped<IPeopleService, PeopleService>();
 
             //services.AddRazorPages();
