@@ -5,16 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppAssignmentMVC_Data_1_3.Models;
-using WebAppAssignmentMVC_Data_1_3.Data;
 
 namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
-    public class AjaxController : Controller
+    public class CityController : Controller
     {
         //All new PeopleService() is now replaced by DI via this Constructor, and using _peopleService instead /ER
-        private readonly IPeopleService _peopleService;
+        private readonly ICityService _peopleService;
 
-        public AjaxController(IPeopleService peopleService)
+        public CityController(ICityService peopleService)
         {
             _peopleService = peopleService;
         }

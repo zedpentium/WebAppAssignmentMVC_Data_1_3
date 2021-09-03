@@ -7,7 +7,7 @@ using WebAppAssignmentMVC_Data_1_3.Data;
 
 namespace WebAppAssignmentMVC_Data_1_3.Migrations
 {
-    [DbContext(typeof(PeopleListContext))]
+    [DbContext(typeof(Data.PeopleDbContext))]
     partial class PeopleListContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

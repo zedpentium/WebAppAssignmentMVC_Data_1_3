@@ -7,7 +7,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 {
     public interface IPeopleRepo
     {
-        Person Create(string PersonName, string PersonPhoneNumber, string PersonCity);
+        Person Create(string personName, string personPhoneNumber, string personCity);
 
 
         List<Person> Read();

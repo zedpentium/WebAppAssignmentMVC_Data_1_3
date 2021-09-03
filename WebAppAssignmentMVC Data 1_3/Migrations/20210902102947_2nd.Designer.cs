@@ -9,8 +9,8 @@ using WebAppAssignmentMVC_Data_1_3.Data;
 namespace WebAppAssignmentMVC_Data_1_3.Migrations
 {
     [DbContext(typeof(Data.PeopleDbContext))]
-    [Migration("20210902060826_initial create")]
-    partial class initialcreate
+    [Migration("20210902102947_2nd")]
+    partial class _2nd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

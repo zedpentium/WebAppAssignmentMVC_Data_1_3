@@ -38,11 +38,14 @@ namespace WebAppAssignmentMVC_Data_1_3
                 options.Cookie.IsEssential = true;
             });
 
-            services.AddDbContext<PeopleListContext>(options =>
+            services.AddDbContext<PeopleDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("PeopleDb")));
 
-            services.AddScoped<IPeopleRepo, DatabasePeopleRepo>();
+            services.AddScoped<IPeopleRepo, DbPeopleRepo>();
+
             services.AddScoped<IPeopleService, PeopleService>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<ICityService, CityService>();
 
             //services.AddRazorPages();
         }

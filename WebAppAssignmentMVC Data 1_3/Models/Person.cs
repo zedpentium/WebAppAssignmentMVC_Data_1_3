@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-
 namespace WebAppAssignmentMVC_Data_1_3.Models
 {
     public class Person
@@ -9,22 +8,23 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         private int _personId;
         private string _personName;
         private string _personPhoneNumber;
-        private string _personCity;
+        private City _personCity;
+        //private class _personCity(int CityId, string CityName);
 
 
-        public Person(string PersonName, string PersonPhoneNumber, string PersonCity)
+        public Person(string personName, string personPhoneNumber, City personCity)
         {
             //this.PersonId = PersonId;
-            this.PersonName = PersonName;
-            this.PersonPhoneNumber = PersonPhoneNumber;
-            this.PersonCity = PersonCity;
+            PersonName = personName;
+            PersonPhoneNumber = personPhoneNumber;
+            PersonCity = personCity;
         }
 
         [Key]
         public int PersonId
         {
             get { return _personId; }
-            set { _personId = value; }
+            //set { _personId = value; }
         }
 
         public string PersonName
@@ -40,7 +40,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
             set { _personPhoneNumber = value; }
         }
 
-        public string PersonCity
+        public City PersonCity
         {
             get { return _personCity; }
             set {_personCity = value; }

@@ -3,15 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebAppAssignmentMVC_Data_1_3.Data;
+using WebAppAssignmentMVC_Data_1_3.Models;
 
-namespace WebAppAssignmentMVC_Data_1_3.Models
+namespace WebAppAssignmentMVC_Data_1_3.Data
 {
-    public class DatabasePeopleRepo : IPeopleRepo
+    public class DbPeopleRepo : IPeopleRepo
     {
-        private readonly PeopleListContext _peopleListContext;
+        private readonly PeopleDbContext _peopleListContext;
 
-        public DatabasePeopleRepo(PeopleListContext peopleListContext)
+        public DbPeopleRepo(PeopleDbContext peopleListContext)
         {
             _peopleListContext = peopleListContext;
 

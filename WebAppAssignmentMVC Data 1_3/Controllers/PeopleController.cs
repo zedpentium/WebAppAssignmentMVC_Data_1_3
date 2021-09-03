@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppAssignmentMVC_Data_1_3.Models;
+using WebAppAssignmentMVC_Data_1_3.Data;
 
 namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {

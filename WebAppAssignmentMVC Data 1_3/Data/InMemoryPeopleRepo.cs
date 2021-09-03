@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAppAssignmentMVC_Data_1_3.Models;
 
-namespace WebAppAssignmentMVC_Data_1_3.Models
+namespace WebAppAssignmentMVC_Data_1_3.Data
 {
     public class InMemoryPeopleRepo : IPeopleRepo
     {
