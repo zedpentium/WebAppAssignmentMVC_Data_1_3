@@ -17,21 +17,18 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         }
 
 
-        public City Add(CreateCityViewModel person)
+        public City Add(CreateCityViewModel cityViewModel)
         {
-            //InMemoryPeopleRepo createAndStorePerson = new InMemoryPeopleRepo();
-            City madePerson = _cityRepo.Create(person.PersonName, person.PersonPhoneNumber, person.PersonCity);
+            City madeCity = _cityRepo.Create(cityViewModel.CityName);
 
-            return madePerson;
+            return madeCity;
         }
 
         public CityViewModel All()
         {
-            //InMemoryPeopleRepo pRepoList = new InMemoryPeopleRepo(); 
+            CityViewModel ciViewMod = new CityViewModel() { CityListView = _cityRepo.Read() };  
 
-            CityViewModel pViewMod = new CityViewModel() { PeopleListView = _cityRepo.Read() };  
-
-            return pViewMod;
+            return ciViewMod;
         }
 
         public City Edit(int id, City person)
@@ -41,20 +38,18 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public CityViewModel FindBy(CityViewModel search)
         {
-            //InMemoryPeopleRepo loadListForSearch = new InMemoryPeopleRepo();
-
-            search.PeopleListView.Clear();
+            search.CityListView.Clear();
 
             foreach (City item in _cityRepo.Read())
             {
-                if (item.PersonName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase) || item.PersonCity.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase))
+                if (item.CityName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase))
                 {
 
-                    search.PeopleListView.Add(item);
+                    search.CityListView.Add(item);
                 }
             }
 
-            if (search.PeopleListView.Count == 0)
+            if (search.CityListView.Count == 0)
             {
                 search.SearchResultEmpty = $"No Person or City could be found, matching \"{search.FilterString}\" ";
             } else
@@ -68,19 +63,27 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public City FindBy(int id)
         {
-            //InMemoryPeopleRepo findPersonById = new InMemoryPeopleRepo();
-            City foundPerson = _cityRepo.Read(id);
+            City foundCity = _cityRepo.Read(id);
 
-            return foundPerson;
+            return foundCity;
         }
 
         public bool Remove(int id)
         {
-            //InMemoryPeopleRepo deletePersonFromRepo = new InMemoryPeopleRepo();
-            City personToDelete = _cityRepo.Read(id);
-            bool success = _cityRepo.Delete(personToDelete);
+            City cityToDelete = _cityRepo.Read(id);
+            bool success = _cityRepo.Delete(cityToDelete);
 
             return success;
         }
+
+        public void CreateBaseCities()
+        {
+            _cityRepo.Create("Skövde");
+            _cityRepo.Create("Trondheim");
+            _cityRepo.Create("Kelontekemä");
+            _cityRepo.Create("Eindhoven");
+        }
+
+
     }
 }

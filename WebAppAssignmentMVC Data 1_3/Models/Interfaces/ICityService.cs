@@ -18,5 +18,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         City Edit(int id, City person);
 
         bool Remove(int id);
+
+        void CreateBaseCities();
+
     }
 }

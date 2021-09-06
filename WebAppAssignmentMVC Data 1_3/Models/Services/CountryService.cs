@@ -27,12 +27,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         {
             //InMemoryPeopleRepo pRepoList = new InMemoryPeopleRepo(); 
 
-            CountryViewModel pViewMod = new CountryViewModel() { PeopleListView = _peopleRepo.Read() };  
+            CountryViewModel coViewMod = new CountryViewModel() { CountryListView = _countryRepo.Read() };  
 
-            return pViewMod;
+            return coViewMod;
         }
 
-        public Country Edit(int id, Country person)
+        public Country Edit(int id, Country country)
         {
             throw new NotImplementedException();
         }
@@ -41,18 +41,18 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         {
             //InMemoryPeopleRepo loadListForSearch = new InMemoryPeopleRepo();
 
-            search.PeopleListView.Clear();
+            search.CountryListView.Clear();
 
-            foreach (Country item in _peopleRepo.Read())
+            foreach (Country item in _countryRepo.Read())
             {
-                if (item.PersonName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase) || item.PersonCity.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase))
+                if (item.CountryName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase))
                 {
 
-                    search.PeopleListView.Add(item);
+                    search.CountryListView.Add(item);
                 }
             }
 
-            if (search.PeopleListView.Count == 0)
+            if (search.CountryListView.Count == 0)
             {
                 search.SearchResultEmpty = $"No Person or City could be found, matching \"{search.FilterString}\" ";
             } else
@@ -66,19 +66,29 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public Country FindBy(int id)
         {
-            //InMemoryPeopleRepo findPersonById = new InMemoryPeopleRepo();
-            Person foundPerson = _peopleRepo.Read(id);
+            Country foundCountry = _countryRepo.Read(id);
 
-            return foundPerson;
+            return foundCountry;
         }
 
         public bool Remove(int id)
         {
-            //InMemoryPeopleRepo deletePersonFromRepo = new InMemoryPeopleRepo();
-            Country personToDelete = _peopleRepo.Read(id);
-            bool success = _peopleRepo.Delete(personToDelete);
+            Country countryToDelete = _countryRepo.Read(id);
+            bool success = _countryRepo.Delete(countryToDelete);
 
             return success;
         }
+
+        public void CreateBaseCountries()
+        {
+            _countryRepo.Create("Sweden");
+            _countryRepo.Create("Norway");
+            _countryRepo.Create("Finland");
+            _countryRepo.Create("Netherlands");
+        }
+
+
     }
+
+
 }

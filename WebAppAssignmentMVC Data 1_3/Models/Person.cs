@@ -5,27 +5,24 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
     public class Person
     {
 
-        private int _personId;
         private string _personName;
         private string _personPhoneNumber;
-        private City _personCity;
-        //private class _personCity(int CityId, string CityName);
+        private City _city;
 
+        public Person()
+        { }
 
         public Person(string personName, string personPhoneNumber, City personCity)
         {
-            //this.PersonId = PersonId;
+
             PersonName = personName;
             PersonPhoneNumber = personPhoneNumber;
-            PersonCity = personCity;
+            City = personCity;
         }
 
         [Key]
-        public int PersonId
-        {
-            get { return _personId; }
-            //set { _personId = value; }
-        }
+        public int PersonId { get; }
+
 
         public string PersonName
         {
@@ -40,12 +37,14 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
             set { _personPhoneNumber = value; }
         }
 
-        public City PersonCity
+        public City City
         {
-            get { return _personCity; }
-            set {_personCity = value; }
+            get { return _city; }
+            set { _city = value; }
         }
-        
+
+        public int CityForeignKey { get; set; }
+
 
     }
 }

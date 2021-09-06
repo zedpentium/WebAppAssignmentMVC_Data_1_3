@@ -10,9 +10,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
     {
 
         [DataType(DataType.Text)]
-        [Required(ErrorMessage = "* Please enter country"), MaxLength(50)]
+        [Required(ErrorMessage = "* Please enter city"), MaxLength(50)]
         [Display(Name = "City")]
         public string CityName { get; set; }
+
     }  
      
 }

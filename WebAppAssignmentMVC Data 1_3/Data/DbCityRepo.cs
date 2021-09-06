@@ -17,33 +17,25 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
 
         }
 
-        public void CreateBaseCities()
+        public DbCityRepo()
         {
-            Create("Eindhoven");
-            Create("Skövde");
-            Create("Trondheim");
-            Create("Kelontekemä");
         }
 
-       public City Create(string cityName)
+ 
+        public City Create(string cityName)
         {
-            City newPerson = new City(cityName);
+            City newCity = new City(cityName);
 
-            _cityListContext.Add(newPerson);
+            _cityListContext.Add(newCity);
             _cityListContext.SaveChanges();
 
-            return newPerson;
+            return newCity;
         }
 
-        
+
         public List<City> Read()
         {
             List<City> cList = _cityListContext.Cities.ToList();
-            if (cList.Count == 0)
-            {
-                CreateBaseCities();
-                cList = _cityListContext.Cities.ToList();
-            }
 
             return cList;
         }

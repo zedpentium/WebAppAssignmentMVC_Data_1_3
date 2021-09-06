@@ -23,7 +23,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         [DataType(DataType.Text)]
         [Required(ErrorMessage = "* Please choose city"), MaxLength(50)]
         [Display(Name = "City")]
-        public string PersonCity { get; set; }
+        public City PersonCity { get; set; }
 
 
     }  

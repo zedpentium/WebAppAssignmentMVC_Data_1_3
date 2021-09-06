@@ -10,12 +10,11 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
     public class CityController : Controller
     {
-        //All new PeopleService() is now replaced by DI via this Constructor, and using _peopleService instead /ER
-        private readonly ICityService _peopleService;
+        private readonly ICityService _cityService;
 
-        public CityController(ICityService peopleService)
+        public CityController(ICityService cityService)
         {
-            _peopleService = peopleService;
+            _cityService = cityService;
         }
 
 
@@ -26,26 +25,26 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         }
 
         [HttpGet]
-        public IActionResult AllPeopleList()
+        public IActionResult AllCityList()
         {
             //PeopleService checkListView = new PeopleService();
-            List<Person> peopleList = _peopleService.All().PeopleListView;
+            List<City> cityList = _cityService.All().CityListView;
 
-            return PartialView("_PeopleListPartial", peopleList);
+            return PartialView("_CityListPartial", cityList);
 
         }
 
         [HttpPost]
-        public IActionResult FindPersonById(int id)
+        public IActionResult FindCityById(int id)
         {
             //PeopleService filterString = new PeopleService();
-            Person foundPerson = _peopleService.FindBy(id);
+            City foundCity = _cityService.FindBy(id);
 
-            if (foundPerson != null)
+            if (foundCity != null)
             {
-                List<Person> addPerson = new List<Person>() { foundPerson };
+                List<City> addCity = new List<City>() { foundCity };
 
-                return PartialView("_PeopleListPartial", addPerson);
+                return PartialView("_CityListPartial", addCity);
             }
 
             return StatusCode(404);
@@ -53,10 +52,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeletePersonById(int id)
+        public IActionResult DeleteCityById(int id)
         {
             //PeopleService filterString = new PeopleService();
-            bool success = _peopleService.Remove(id);
+            bool success = _cityService.Remove(id);
 
             if (success)
             {
@@ -70,4 +69,4 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 
 
     }
-}
+} // ER Code

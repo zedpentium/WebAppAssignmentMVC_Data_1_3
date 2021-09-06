@@ -1,72 +1,82 @@
 ﻿@model PeopleViewModel
 
 <div>
-    <h2>@ViewBag.Title</h2>
-    <br />
-    <h4>Eric R WebAppAssignmentMVC_Data_2</h4>
+    <h4>@ViewBag.Title</h4>
+    <p>Eric R WebAppAssignmentMVC_Data_2</p>
 
     <div>
         <br />
         <P id="actionMessage">@ViewBag.Mess</P>
+        <p>@ViewBag.BaseCityList</p>
+        <p>@ViewBag.BasePersonList</p>
     </div>
 
     <div class="flexwrap">
 
         <div>
+            <fieldset id="fieldsetbox">
+                <legend id="legbox">Filter list by search</legend>
+                <form asp-action="Index" method="post" role="form">
 
-            <form asp-action="Index" method="post" role="form">
-                @Html.AntiForgeryToken()
-                <h3><b>Filter list by search</b></h3>
-                <label asp-for="FilterString"></label>
+                    @Html.AntiForgeryToken()
+                    <label asp-for="FilterString"></label>
+                    <br />
+                    <input asp-for="FilterString" required />
+                    <br />
+                    <br />
+                    <input type="submit" class="btn btn-primary" name="btnFilter" value="Search" />
+
+                </form>
                 <br />
-                <input asp-for="FilterString" required />
                 <br />
-                <br />
-                <input type="submit" class="btn btn-primary" name="btnFilter" value="Search" />
-            </form>
-            <br />
-            <br />
-            <input type="button" class="btn btn-primary" name="btnReset" value="Reset Search" onClick="location.href='@Url.Action("Index", "People")'" />
+                <input type="button" class="btn btn-primary" name="btnReset" value="Reset Search" onClick="location.href='@Url.Action("Index", "People")'" />
+            </fieldset>
         </div>
 
 
         <div>
-            <form asp-action="CreatePerson" method="post" role="form">
-                @Html.AntiForgeryToken()
-                <div>
-                    <h3><b>Create a new Person</b></h3>
-                    <label asp-for="PersonName"></label>
-                    <br />
-                    <input asp-for="PersonName" />
-                    <br />
-                    <span id="redtext" asp-validation-for="PersonName"></span>
-                    <br />
-                    <label asp-for="PersonPhoneNumber"></label>
-                    <br />
-                    <input asp-for="PersonPhoneNumber" />
-                    <br />
-                    <span id="redtext" asp-validation-for="PersonPhoneNumber"></span>
-                    <br />
-                    <label asp-for="PersonCity"></label>
-                    <br />
-                    <input asp-for="PersonCity" />
-                    <br />
-                    <span id="redtext" asp-validation-for="PersonCity"></span>
-                    <br />
-                </div>
-                <div>
-                    <input type="submit" class="btn btn-primary" name="btnCreate" value="Add Person" />
-                </div>
-            </form>
+            <fieldset id="fieldsetbox">
+                <legend id="legbox">Create a new Person</legend>
+                <form asp-action="CreatePerson" method="post" role="form">
+                    @Html.AntiForgeryToken()
+                    <div>
+                        <label asp-for="PersonName"></label>
+                        <br />
+                        <input asp-for="PersonName" />
+                        <br />
+                        <span id="redtext" asp-validation-for="PersonName"></span>
+                        <br />
+                        <label asp-for="PersonPhoneNumber"></label>
+                        <br />
+                        <input asp-for="PersonPhoneNumber" />
+                        <br />
+                        <span id="redtext" asp-validation-for="PersonPhoneNumber"></span>
+                        <br />
+                        <label asp-for="PersonCity"></label>
+                        <br />
+                        <select asp-for="PersonCity">
+                            <option value="" disabled>Select a City</option>
+                            @foreach (City city in Model.CityListView)
+                            {
+                                <option value="@city">@city.CityName</option>
+                            }
+                        </select>
+                        <br />
+                        <span id="redtext" asp-validation-for="PersonCity"></span>
+                        <br />
+                    </div>
+                    <div>
+                        <input type="submit" class="btn btn-primary" name="btnCreate" value="Add Person" />
+                    </div>
+                </form>
+            </fieldset>
         </div>
 
     </div> <!-- end flexdiv -->
 
     <br />
     <div>
-        @{
-        }
-        <partial name="_PeopleListPartial" model="Model.PeopleListView" />
+        @{ <partial name="_PeopleListPartial" model="Model" />}
     </div>
 
 </div>

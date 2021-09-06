@@ -8,7 +8,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 {
     public interface ICountryService
     {
-        Country Add(CreateCountryViewModel person);
+        Country Add(CreateCountryViewModel country);
 
         CountryViewModel All();
 
@@ -16,8 +16,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         Country FindBy(int id);
 
-        Country Edit(int id, Country person);
+        Country Edit(int id, Country country);
 
         bool Remove(int id);
+
+        void CreateBaseCountries();
     }
 }

@@ -13,10 +13,14 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
     {
         //All new PeopleService() is now replaced by DI via this Constructor, and using _peopleService instead /ER
         private readonly IPeopleService _peopleService;
+        private readonly ICityService _cityService;
+        private readonly ICountryService _countryService;
 
-        public AjaxController(IPeopleService peopleService)
+        public AjaxController(IPeopleService peopleService, ICityService cityService, ICountryService countryService)
         {
             _peopleService = peopleService;
+            _cityService = cityService;
+            _countryService = countryService;
         }
 
 
@@ -29,24 +33,30 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         [HttpGet]
         public IActionResult AllPeopleList()
         {
-            //PeopleService checkListView = new PeopleService();
-            List<Person> peopleList = _peopleService.All().PeopleListView;
+            PeopleViewModel peopleViewModel = new PeopleViewModel()
+            {
+                PeopleListView = _peopleService.All().PeopleListView,
+                CityListView = _cityService.All().CityListView,
+            };
 
-            return PartialView("_PeopleListPartial", peopleList);
-
+            return PartialView("_PeopleListPartial", peopleViewModel);
         }
 
         [HttpPost]
         public IActionResult FindPersonById(int id)
         {
-            //PeopleService filterString = new PeopleService();
-            Person foundPerson = _peopleService.FindBy(id);
-
-            if (foundPerson != null)
+            PeopleViewModel peopleViewModel = new PeopleViewModel()
             {
-                List<Person> addPerson = new List<Person>() { foundPerson };
+                CityListView = _cityService.All().CityListView,
+            };
 
-                return PartialView("_PeopleListPartial", addPerson);
+            Person person = _peopleService.FindBy(id);
+
+            if (person != null)
+            {
+                peopleViewModel.PeopleListView.Add(person);
+
+                return PartialView("_PeopleListPartial", peopleViewModel);
             }
 
             return StatusCode(404);
@@ -56,7 +66,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         [HttpPost]
         public IActionResult DeletePersonById(int id)
         {
-            //PeopleService filterString = new PeopleService();
             bool success = _peopleService.Remove(id);
 
             if (success)

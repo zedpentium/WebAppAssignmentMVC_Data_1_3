@@ -16,9 +16,9 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         Country Read(int id);
 
 
-        Country Update(Country person);
+        Country Update(Country country);
 
 
-        bool Delete(Country person);
+        bool Delete(Country country);
     }
 }

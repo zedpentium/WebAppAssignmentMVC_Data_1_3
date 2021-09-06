@@ -18,5 +18,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         Person Edit(int id, Person person);
 
         bool Remove(int id);
+
+        void CreateBasePeople(List<City> cList);
     }
 }

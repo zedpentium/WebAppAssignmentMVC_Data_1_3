@@ -14,22 +14,26 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
         
         public void CreateBasePersons()
         {
-            InMemoryPeopleRepo pDataBase = new InMemoryPeopleRepo();
+            /*InMemoryPeopleRepo pDataBase = new InMemoryPeopleRepo();
             pDataBase.Create("Eric Rönnhult", "0777 777777", "Tiesto");
             pDataBase.Create("Bosse Bus", "0777 777777", "Flen");
             pDataBase.Create("Kjell Kriminell", "0777 777777", "Burg");
             pDataBase.Create("Anders Rolle", "0777 777777", "Götet");
+            */
         }
 
-        public Person Create(string PersonName, string PersonPhoneNumber, string PersonCity)
+        public Person Create(string PersonName, string PersonPhoneNumber, City PersonCity)
         {
+            /*
+
             //Person newPerson = new Person(_idCounter, PersonName, PersonPhoneNumber, PersonCity);
             Person newPerson = new Person(PersonName, PersonPhoneNumber, PersonCity); // removed _idCounter to run program
             _pList.Add(newPerson);
 
             _idCounter++;
 
-            return newPerson;
+            return newPerson;*/
+            throw new NotImplementedException();
         }
 
 

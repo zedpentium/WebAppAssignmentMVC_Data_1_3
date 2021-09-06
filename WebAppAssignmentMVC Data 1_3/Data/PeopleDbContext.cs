@@ -27,50 +27,29 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
 
             modelBuilder.Entity<Person>()
             .HasKey(en => en.PersonId)
-            .HasName("PrimaryKey_PersonID");
+            .HasName("PrimaryKey_PersonId");
 
-            modelBuilder.Entity<Person>(p =>
-            {
-                p.Property(en => en.PersonId).IsRequired();
-                p.Property(en => en.PersonName).IsRequired();
-                p.Property(en => en.PersonPhoneNumber).IsRequired();
-                p.Property(en => en.PersonCity).IsRequired();
-            });
-
+            modelBuilder.Entity<Person>()
+                .HasOne(con => con.City)
+                .WithMany(cit => cit.People)
+                .HasForeignKey(con => con.CityForeignKey);
 
             modelBuilder.Entity<City>()
-            .HasKey(en => en.CityId)
-            .HasName("PrimaryKey_CityID");
+                .HasKey(en => en.CityId)
+                .HasName("PrimaryKey_CityId");
 
-            modelBuilder.Entity<City>(p =>
-            {
-                p.Property(en => en.CityId).IsRequired();
-                p.Property(en => en.CityName).IsRequired();
-            });
 
 
             modelBuilder.Entity<Country>()
-            .HasKey(en => en.CountryId)
-            .HasName("PrimaryKey_CountryID");
-
-            modelBuilder.Entity<Country>(p =>
-            {
-                p.Property(en => en.CountryId).IsRequired();
-                p.Property(en => en.CountryName).IsRequired();
-            });
+             .HasKey(en => en.CountryId)
+             .HasName("PrimaryKey_CountryId");
 
 
-            modelBuilder.Entity<Country>()
-                .HasOne(c => c.Country)
-                .WithMany<City>(ci => ci.Cities)
+            /*modelBuilder.Entity<City>()
+                .HasOne(con => con.City)
+                .WithMany(cit => cit.People)
+                .HasForeignKey(con => con.ForeignKey_CountryId);*/
 
-                .HasForeignKey(ci => ci.CountryId);
-
-            /*
-            modelBuilder.Entity<City>()
-                .HasOne(ci => ci.People)
-                .WithMany(c => c.Cities)
-                .HasForeignKey(ci => ci.CityId);*/
 
 
         }

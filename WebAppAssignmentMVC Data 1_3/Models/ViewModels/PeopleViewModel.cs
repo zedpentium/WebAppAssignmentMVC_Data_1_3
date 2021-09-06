@@ -10,6 +10,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
     public class PeopleViewModel : CreatePersonViewModel
     { 
         public List<Person> PeopleListView { get; set; }
+        public List<City> CityListView { get; set; }
+        // public List<Country> CountryListView { get; set; } // not used atm
 
 
         public string FilterString { get; set; }

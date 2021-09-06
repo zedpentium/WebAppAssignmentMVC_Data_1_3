@@ -9,28 +9,25 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
 {
     public class DbCountryRepo : ICountryRepo
     {
-        private readonly PeopleDbContext _peopleListContext;
+        private readonly PeopleDbContext _countryListContext;
 
-        public DbCountryRepo(PeopleDbContext peopleListContext)
+        public DbCountryRepo(PeopleDbContext countryListContext)
         {
-            _peopleListContext = peopleListContext;
+            _countryListContext = countryListContext;
 
         }
 
-        public void CreateBaseCountries()
+        public DbCountryRepo()
         {
-            Create("Sweden");
-            Create("Finland");
-            Create("Norway");
-            Create("Netherlands");
         }
+
 
        public Country Create(string countryName)
         {
             Country newCountry = new Country(countryName);
 
-            _peopleListContext.Add(newCountry);
-            _peopleListContext.SaveChanges();
+            _countryListContext.Add(newCountry);
+            _countryListContext.SaveChanges();
 
             return newCountry;
         }
@@ -38,25 +35,20 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
         
         public List<Country> Read()
         {
-            List<Country> cList = _peopleListContext.Country.ToList();
-            if (cList.Count == 0)
-            {
-                CreateBaseCountries();
-                cList = _peopleListContext.Country.ToList();
-            }
+            List<Country> cList = _countryListContext.Countries.ToList();
 
             return cList;
         }
 
         public Country Read(int id)
         {
-            return _peopleListContext.Country.Find(id);
+            return _countryListContext.Countries.Find(id);
         }
 
         public Country Update(Country country)
         {
-            _peopleListContext.Country.Update(country);
-            _peopleListContext.SaveChanges();
+            _countryListContext.Countries.Update(country);
+            _countryListContext.SaveChanges();
 
             return country;
         }
@@ -65,8 +57,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
         {
             int nrStates;
 
-            _peopleListContext.Country.Remove(country);
-            nrStates = _peopleListContext.SaveChanges();
+            _countryListContext.Countries.Remove(country);
+            nrStates = _countryListContext.SaveChanges();
 
             if (nrStates == 1)
             {

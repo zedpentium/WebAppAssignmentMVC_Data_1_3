@@ -42,6 +42,8 @@ namespace WebAppAssignmentMVC_Data_1_3
             options.UseSqlServer(Configuration.GetConnectionString("PeopleDb")));
 
             services.AddScoped<IPeopleRepo, DbPeopleRepo>();
+            services.AddScoped<ICountryRepo, DbCountryRepo>();
+            services.AddScoped<ICityRepo, DbCityRepo>();
 
             services.AddScoped<IPeopleService, PeopleService>();
             services.AddScoped<ICountryService, CountryService>();

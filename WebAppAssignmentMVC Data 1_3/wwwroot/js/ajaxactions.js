@@ -1,5 +1,5 @@
 ﻿function getAllPeople() {
-    $.get("/Ajax/AllPeopleList", null, function (data) {
+    $.get("/Ajax/AllPeopleList", function (data) {
         $("#peopleviewlist").html(data);
     });
     document.getElementById("jsmessage").textContent = "List of All People fetched.";

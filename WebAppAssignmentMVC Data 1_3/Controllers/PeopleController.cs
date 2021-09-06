@@ -5,19 +5,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAppAssignmentMVC_Data_1_3.Models;
 using WebAppAssignmentMVC_Data_1_3.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
     public class PeopleController : Controller
     {
 
-        //All new PeopleService() is now replaced by DI via this Constructor, and using _peopleService instead /ER
-        private readonly IPeopleService _peopleService;
+        // Now using DI and theese Constructors /ER
 
-        public PeopleController(IPeopleService peopleService)
+        private readonly IPeopleService _peopleService;
+        private readonly ICityService _cityService;
+        private readonly ICountryService _countryService;
+
+        public PeopleController(IPeopleService peopleService, ICityService cityService, ICountryService countryService)
         {
             _peopleService = peopleService;
+            _cityService = cityService;
+            _countryService = countryService;
         }
+
+        /*public PeopleController(ICityService cityService)
+        {
+            _cityService = cityService;
+        }*/
+
 
         public PartialViewResult PersonList()
         {
@@ -28,28 +40,49 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //ViewBag.Title = "Eric R Project";
+            ViewBag.Title = "Eric R Project. This view will generate cities and persons if database is blank";
 
-            //PeopleService checkListView = new PeopleService(); 
-            PeopleViewModel peopleList = new PeopleViewModel() { PeopleListView = _peopleService.All().PeopleListView };
+            PeopleViewModel peopleViewModel = new PeopleViewModel()
+            { 
+                PeopleListView = _peopleService.All().PeopleListView,
+                CityListView = _cityService.All().CityListView,
+            };
 
-            InMemoryPeopleRepo makeBaseList = new InMemoryPeopleRepo(); // to generate 4 persons in Repo
 
-            if (peopleList.PeopleListView.Count == 0 || peopleList.PeopleListView == null)
+            /*if (peopleViewModel.CountryListView.Count == 0 || peopleViewModel.CountryListView == null) // commented out coz not using country atm
             {
-                makeBaseList.CreateBasePersons();
+                _countryService.CreateBaseCountries();  // to generate 4 persons in Repo
+                ViewBag.BaseCountryList = "Database was empty, added cities into it.";
+                peopleViewModel.CountryListView = _countryService.All().CountryListView;
+            }*/
+
+            if (peopleViewModel.CityListView.Count == 0 || peopleViewModel.CityListView == null)
+            {
+                _cityService.CreateBaseCities();  // to generate 4 persons in Repo
+                ViewBag.BaseCityList = "Database was empty, added cities into it.";
+                peopleViewModel.CityListView = _cityService.All().CityListView;
             }
 
-            return View(peopleList);
+            if (peopleViewModel.PeopleListView.Count == 0 || peopleViewModel.PeopleListView == null)
+            {
+                _peopleService.CreateBasePeople(peopleViewModel.CityListView);  // to generate 4 persons in Repo
+                ViewBag.BasePersonList = "Database was empty, added peoples into it.";
+                peopleViewModel.PeopleListView = _peopleService.All().PeopleListView;
+            }
+
+            return View(peopleViewModel);
         }
 
         [HttpPost]
         public IActionResult Index(PeopleViewModel viewModel)
         {
-            //PeopleService filterString = new PeopleService();
+            PeopleViewModel peopleViewModel = new PeopleViewModel()
+            { 
+                PeopleListView = _peopleService.FindBy(viewModel).PeopleListView,
+                CityListView = _cityService.All().CityListView,
+            };
 
-            viewModel = _peopleService.FindBy(viewModel);
-                return View(viewModel); 
+                return View(peopleViewModel); 
         }
 
 
@@ -58,7 +91,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         {
 
             var newModel = new PeopleViewModel();
-            //PeopleService repoList = new PeopleService();
 
             if (ModelState.IsValid)
                 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAppAssignmentMVC_Data_1_3.Data;
 
 namespace WebAppAssignmentMVC_Data_1_3.Models
 {
@@ -26,8 +27,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public PeopleViewModel All()
         {
-            //InMemoryPeopleRepo pRepoList = new InMemoryPeopleRepo(); 
-            
             PeopleViewModel pViewMod = new PeopleViewModel() { PeopleListView = _peopleRepo.Read() };  
 
             return pViewMod;
@@ -46,7 +45,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
             foreach (Person item in _peopleRepo.Read())
             {
-                if (item.PersonName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase) || item.PersonCity.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase))
+                if (item.PersonName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase))
                 {
 
                     search.PeopleListView.Add(item);
@@ -77,9 +76,25 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         {
             //InMemoryPeopleRepo deletePersonFromRepo = new InMemoryPeopleRepo();
             Person personToDelete = _peopleRepo.Read(id);
-            bool success = _peopleRepo.Delete(personToDelete);
 
-            return success;
+            if(personToDelete != null)
+            {
+                bool success = _peopleRepo.Delete(personToDelete);
+
+                return success;
+            }
+
+            return false;
+        }
+
+        public void CreateBasePeople(List<City> cList)
+        {
+            _peopleRepo.Create("Eric Rönnhult", "0777 777777", cList[0]);
+            _peopleRepo.Create("Bosse Bus", "0777 777777", cList[1]);
+            _peopleRepo.Create("Kjell Kriminell", "0777 777777", cList[2]);
+            _peopleRepo.Create("Anders Rolle", "0777 777777", cList[3]);
+
         }
     }
+
 }

@@ -13,15 +13,17 @@
 
     <div class="flexwrap2">
         <div>
-            <h3>JQuery with AJAX functions</h3>
-            <input type="button" class="btn btn-primary" onclick="getAllPeople()" value="Fetch all People" />
-            <br />
-            <label for="IdInput">Person ID (Empty field is 0</label>
-            <br />
-            <input id="IdInput" type="number" />
-            <br />
-            <input type="button" class="btn btn-primary" onclick="getPersonByID()" value="Details" />
-            <input type="button" class="btn btn-primary" onclick="deletePersonById()" value="Delete" />
+            <fieldset id="fieldsetbox">
+                <legend id="legbox">JQuery with AJAX functions</legend>
+                <input type="button" class="btn btn-primary" onclick="getAllPeople()" value="Fetch all People" />
+                <br />
+                <label for="IdInput">Person ID (Empty field is 0</label>
+                <br />
+                <input id="IdInput" type="number" />
+                <br />
+                <input type="button" class="btn btn-primary" onclick="getPersonByID()" value="Details" />
+                <input type="button" class="btn btn-primary" onclick="deletePersonById()" value="Delete" />
+            </fieldset>
         </div>
         <div id="jsmessage"></div>
     </div>

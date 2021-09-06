@@ -16,9 +16,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         City Read(int id);
 
 
-        City Update(City person);
+        City Update(City city);
 
 
-        bool Delete(City person);
+        bool Delete(City city);
+
     }
 }

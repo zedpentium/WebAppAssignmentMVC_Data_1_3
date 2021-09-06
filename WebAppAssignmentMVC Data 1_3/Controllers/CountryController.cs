@@ -11,11 +11,11 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
     public class CountryController : Controller
     {
         //All new PeopleService() is now replaced by DI via this Constructor, and using _peopleService instead /ER
-        private readonly ICountryService _peopleService;
+        private readonly ICountryService _countryService;
 
-        public CountryController(ICountryService peopleService)
+        public CountryController(ICountryService countryService)
         {
-            _peopleService = peopleService;
+            _countryService = countryService;
         }
 
 
@@ -29,23 +29,23 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         public IActionResult AllPeopleList()
         {
             //PeopleService checkListView = new PeopleService();
-            List<Person> peopleList = _peopleService.All().PeopleListView;
+            List<Country> countryList = _countryService.All().CountryListView;
 
-            return PartialView("_PeopleListPartial", peopleList);
+            return PartialView("_CountryListPartial", countryList);
 
         }
 
         [HttpPost]
-        public IActionResult FindPersonById(int id)
+        public IActionResult FindCountryById(int id)
         {
             //PeopleService filterString = new PeopleService();
-            Person foundPerson = _peopleService.FindBy(id);
+            Country foundCountry = _countryService.FindBy(id);
 
-            if (foundPerson != null)
+            if (foundCountry != null)
             {
-                List<Person> addPerson = new List<Person>() { foundPerson };
+                List<Country> addCountry = new List<Country>() { foundCountry };
 
-                return PartialView("_PeopleListPartial", addPerson);
+                return PartialView("_PeopleListPartial", addCountry);
             }
 
             return StatusCode(404);
@@ -53,10 +53,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeletePersonById(int id)
+        public IActionResult DeleteCountryById(int id)
         {
             //PeopleService filterString = new PeopleService();
-            bool success = _peopleService.Remove(id);
+            bool success = _countryService.Remove(id);
 
             if (success)
             {
