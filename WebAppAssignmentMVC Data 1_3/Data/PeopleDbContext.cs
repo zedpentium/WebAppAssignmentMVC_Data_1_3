@@ -75,12 +75,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
 
             modelBuilder.Entity<PersonLanguage>() // One Person to Many Languages
                 .HasOne(ec => ec.Person)
-                .WithMany(e => e.LanguagesLink)
+                .WithMany(e => e.PersonLanguages)
                 .HasForeignKey(ec => ec.PersonId);
 
             modelBuilder.Entity<PersonLanguage>()  // One Language to Many People
                 .HasOne(ec => ec.Language)
-                .WithMany(c => c.PeopleLink)
+                .WithMany(c => c.PersonLanguages)
                 .HasForeignKey(ec => ec.LanguageId);
 
 

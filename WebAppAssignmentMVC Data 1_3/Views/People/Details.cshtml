@@ -16,9 +16,9 @@
                     <b>Languages:</b>
                     <div class="border-1">
                         @{
-                            if (Model.LanguagesLink != null)
+                            if (Model.PersonLanguages != null)
                             {
-                                foreach (PersonLanguage language in Model.LanguagesLink)
+                                foreach (PersonLanguage language in Model.PersonLanguages)
                                 { <div>@language.Language.LanguageName</div> }
                         }
                                         }

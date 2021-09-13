@@ -36,6 +36,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 
             CreatePersonViewModel citylist = new CreatePersonViewModel() { Cities = peopleViewModel.CityListView };
 
+            ViewBag.Mess = TempData["Deletemess"];
+
             return View("Index", peopleViewModel);
         }
 
@@ -86,17 +88,19 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
             return View("index", peopleViewModel);
         }
 
-
+        [HttpPost]
         public IActionResult DeletePerson(int id)
         {
             _peopleService.Remove(id);
+
+            TempData["Deletemess"] = "Person Deleted!";
 
             return RedirectToAction("Index");
         }
 
 
         // ---------------  Special Actions below ---------------
-
+        [HttpPost]
         public IActionResult PersonDetails(int id)
         {
             Person personDetails = _peopleService.FindBy(id);
@@ -105,7 +109,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         }
 
 
-
+        [HttpPost]
         public IActionResult AddLanguageView(int id)
         {
             PersonLanguageViewModel personLanguageViewModel = new PersonLanguageViewModel()
@@ -114,15 +118,25 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
                 Person = _peopleService.FindBy(id)
             };
 
-            PersonLanguageViewModel selectlistDone = GenerateSelectList(personLanguageViewModel);
-            
-            return View("AddLanguagesToPerson", selectlistDone);
+            personLanguageViewModel = GenerateSelectList(personLanguageViewModel);
+            //personLanguageViewModel.LanguageListView = _languageService.All().LanguageListView;
+            //personLanguageViewModel.Person = foundPerson;
+
+            return View("AddLanguagesToPerson", personLanguageViewModel);
         }
 
 
 
         public IActionResult AddLanguageToPerson(PersonLanguageViewModel personLanguageViewModel)
         {
+            Person person = _peopleService.FindBy(personLanguageViewModel.PersonId);
+
+            personLanguageViewModel.LanguageListView = _languageService.All().LanguageListView;
+            personLanguageViewModel.Person = person;
+
+            personLanguageViewModel = GenerateSelectList(personLanguageViewModel);
+
+
             if (ModelState.IsValid)
             {
                 bool success = _peopleService.AddLanguageToPerson(personLanguageViewModel);
@@ -130,7 +144,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
                 if (success) { ViewBag.Mess = "Languages added to Person!"; }
                 else { ViewBag.Mess = "Error! Language did NOT get stored"; }
 
-                return RedirectToAction("AddLanguageView");
+                return View("AddLanguagesToPerson", personLanguageViewModel);
             }
 
             return View("AddLanguagesToPerson", personLanguageViewModel);
@@ -188,7 +202,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
             List<Language> listPeronsLang = new List<Language>(); // list to add languages that a person might have allready
             List<SelectListItem> generatedList = new List<SelectListItem>();
 
-            foreach (PersonLanguage language in personLanguageViewModel.Person.LanguagesLink.ToList())
+            foreach (PersonLanguage language in personLanguageViewModel.Person.PersonLanguages.ToList())
             {
                 listPeronsLang.Add(language.Language);
             }

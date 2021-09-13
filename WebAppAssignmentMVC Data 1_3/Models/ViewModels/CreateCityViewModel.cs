@@ -17,7 +17,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         [DataType(DataType.Text)]
         [Required(ErrorMessage = "* Please choose country"), MaxLength(50)]
         [Display(Name = "Country")]
-        public Country Country { get; set; }
+        public string Country { get; set; }
 
     }  
      

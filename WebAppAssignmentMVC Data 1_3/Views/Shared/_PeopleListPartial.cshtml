@@ -11,18 +11,25 @@
     </div>
     @foreach (Person person in Model.PeopleListView)
     {
-        <div class="row">
+        <div class="row" id="peoplelisttable">
             <div class="col-1">@person.PersonId</div>
             <div class="col-3">@person.PersonName</div>
             <div class="col-2">@person.PersonPhoneNumber</div>
             <div class="col-2">@person.City.CityName</div>
             <div class="col-2">@person.City.Country.CountryName</div>
             <div class="col-2" id="btnBorderBox">
-                <a id="optionBtnGreen" href="@Url.Action("AddLanguageView", "People", new { id = @person.PersonId })">Add Language(s)</a>
-                <br />
-                <a id="optionBtnGreen" href="@Url.Action("PersonDetails", "People", new { id = @person.PersonId })">Details</a>
-                <br />
-                <a id="optionBtnRed" href="@Url.Action("DeletePerson", "People" , new { id = @person.PersonId, onclick = "return confirm('Are you sure you wish to delete this?');" })">Delete</a>
+                <form asp-action="AddLanguageView" asp-route-id="@person.PersonId" method="post" role="form" >
+                    @Html.AntiForgeryToken()
+                    <input type="submit" id="optionBtnGreen" value="Add Language(s)">
+                </form>
+                <form asp-action="PersonDetails" asp-route-id="@person.PersonId" method="post" role="form" >
+                    @Html.AntiForgeryToken()
+                    <input type="submit" id="optionBtnGreen" value="Details">
+                </form>
+                <form asp-action="DeletePerson" asp-route-id="@person.PersonId" method="post" role="form" onclick="return confirm('Are you sure you want to delete this?')">
+                    @Html.AntiForgeryToken()
+                    <input type="submit" id="optionBtnRed" value="Delete">
+                </form>
             </div>
         </div>
     }

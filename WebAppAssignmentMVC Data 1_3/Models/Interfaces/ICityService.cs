@@ -7,7 +7,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 {
     public interface ICityService
     {
-        City Add(CreateCityViewModel person);
+        City Add(string cityName, Country country);
 
         CityViewModel All();
 

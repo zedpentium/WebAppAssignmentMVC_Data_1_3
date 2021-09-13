@@ -31,7 +31,6 @@
                                 <li><a class="dropdown-item" asp-controller="Country" asp-action="Index">Country</a></li>
                                 <li><a class="dropdown-item" asp-controller="City" asp-action="Index">City</a></li>
                                 <li><a class="dropdown-item" asp-controller="Language" asp-action="Index">Language</a></li>
-                                <li><a class="dropdown-item" asp-controller="People" asp-action="AddLanguageView">Add Language to Person</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -39,6 +38,7 @@
                         </li>
                     </ul>
                 </div>
+                <div id="actionMessage">@ViewBag.Mess</div>
 
             </nav>
         </header>

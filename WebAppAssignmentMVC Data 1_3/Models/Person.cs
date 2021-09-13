@@ -13,7 +13,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         public Person()
         { }
 
-        /*public Person(List<Language> languages)
+       /* public Person(List<PersonLanguage> languages)
         {
             Languages = languages;
         }*/
@@ -48,9 +48,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public City City { get; set; }
 
-
-        public ICollection<PersonLanguage> LanguagesLink { get; set; } // Join table-navigation-relation EF Core Specific with no lazy loading /ER
-
         //public List<Language> Languages { get; set; } // commented out to get many-to-many to work in EF Core  /ER
+
+        public List<PersonLanguage> PersonLanguages { get; set; } = new List<PersonLanguage>();// Join table-navigation-relation EF Core Specific with no lazy loading /ER
+
+
     }
 }

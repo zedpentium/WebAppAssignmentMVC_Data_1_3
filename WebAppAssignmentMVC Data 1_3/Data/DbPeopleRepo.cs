@@ -35,24 +35,56 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
 
             Person updatePersonLang = updatePersonLang = _peopleListContext.People // load person with languages
                 .Where(c => c.PersonId == personLanguageViewModel.PersonId)
-                .Include(f => f.LanguagesLink).ThenInclude(g => g.Language)
+                .Include(f => f.PersonLanguages).ThenInclude(g => g.Language)
                 .First();
 
-            List<Language> dbLangList = _peopleListContext.Languages.ToList();
+            List<PersonLanguage> dbLangList = _peopleListContext.PersonLanguages.ToList();
+            List<PersonLanguage> foundLang = new List<PersonLanguage>();
 
             foreach (string id in personLanguageViewModel.SelectedListBoxView)
             {
-                Language foundLang = dbLangList.Find(la => la.LanguageId == Convert.ToInt32(id));
-
-                updatePersonLang.LanguagesLink = new List<PersonLanguage>
-                {
-                    new PersonLanguage
-                    {
-                    Person = updatePersonLang,
-                    Language = foundLang
-                    }
-                };
+                foundLang.Add(dbLangList.Find(la => la.LanguageId == Convert.ToInt32(id)));
             }
+
+            //_peopleListContext.PersonLanguages.Add(foundLang);
+
+
+            /*    Another TESTkod part JUST to test someting different then before.. but no. no sulution.
+             *    
+            // I will add two books to one library
+            var language1 = new Language();
+            var language2 = new Language();
+
+            // I create the library 
+            var lib = new Person();
+
+            // I create two Library2Book which I need them 
+            // To map between the books and the library
+            var l2pers1 = new PersonLanguage();
+            var l2pers2 = new PersonLanguage();
+
+            // Mapping the first book to the library.
+            // Changed b2lib2.Library to b2lib1.Library
+            l2pers1.Language = language1;
+            l2pers1.Person = lib;
+
+            // I map the second book to the library.
+            l2pers2.Language = language2;
+            l2pers2.Person = lib;
+
+            // Linking the books (Library2Book table) to the library
+            lib.PersonLanguages.Add(l2pers1);
+            lib.PersonLanguages.Add(l2pers2);
+
+            // Adding the data to the DbContext.
+            _peopleListContext.People.Add(lib);
+
+            _peopleListContext.Languages.Add(language1);
+            _peopleListContext.Languages.Add(language2);
+
+            // Save the changes and everything should be working!
+            _peopleListContext.SaveChanges();*/
+
 
             nrStates =_peopleListContext.SaveChanges();
 
@@ -71,7 +103,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
             List<Person> pList = _peopleListContext.People
                 .Include(d => d.City)
                 .Include(e => e.City.Country)
-                .Include(f => f.LanguagesLink).ThenInclude(g => g.Language)
+                .Include(f => f.PersonLanguages).ThenInclude(g => g.Language)
                 .ToList();
 
             return pList;
@@ -83,8 +115,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
                 .Where(c => c.PersonId == id)
                 .Include(d => d.City)
                 .Include(e => e.City.Country)
-                .Include(f => f.LanguagesLink).ThenInclude(g => g.Language)
-                .First();
+                .Include(f => f.PersonLanguages).ThenInclude(g => g.Language)
+                .FirstOrDefault();
 
             return person;
         }

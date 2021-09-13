@@ -17,9 +17,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         }
 
 
-        public City Add(CreateCityViewModel cityViewModel)
+        public City Add(string cityName, Country country)
         {
-            City madeCity = _cityRepo.Create(cityViewModel.CityName, cityViewModel.Country);
+            
+            City madeCity = _cityRepo.Create(cityName, country);
 
             return madeCity;
         }

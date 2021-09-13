@@ -49,9 +49,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 
             if (ModelState.IsValid)
             {
-                _cityService.Add(createCityViewModel);
+                Country country = _countryService.FindBy(Convert.ToInt32(createCityViewModel.Country));
+
+                _cityService.Add(createCityViewModel.CityName, country);
 
                 newModel.CityListView = _cityService.All().CityListView;
+                newModel.CountryListView = _countryService.All().CountryListView;
 
                 ViewBag.Mess = "City Added!";
 
@@ -61,6 +64,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
             newModel.CityName = createCityViewModel.CityName;
 
             newModel.CityListView = _cityService.All().CityListView;
+            newModel.CountryListView = _countryService.All().CountryListView;
 
             return View("index", newModel);
         }

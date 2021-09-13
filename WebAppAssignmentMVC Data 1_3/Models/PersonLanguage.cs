@@ -18,10 +18,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
 
 
-        public PersonLanguage()
+        /*public PersonLanguage()
         { }
 
-        /*public PersonLanguage (int person, int language)
+        public PersonLanguage (int person, int language)
         {
             PersonId = person;
             LanguageId = language;
