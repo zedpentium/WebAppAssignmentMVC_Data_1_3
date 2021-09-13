@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
 
         }
 
-        //public DbPeopleRepo() { }
 
-
-        public Person Create(string PersonName, string PersonPhoneNumber, City PersonCity)
+        public Person Create(string personName, string personPhoneNumber, City city)
         {
-            Person newPerson = new Person(PersonName, PersonPhoneNumber, PersonCity);
+            Person newPerson = new Person(personName, personPhoneNumber, city);
 
             _peopleListContext.Add(newPerson);
             _peopleListContext.SaveChanges();
@@ -30,17 +29,64 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
             return newPerson;
         }
 
+        public bool AddLanguageToPerson(PersonLanguageViewModel personLanguageViewModel)
+        {
+            int nrStates;
+
+            Person updatePersonLang = updatePersonLang = _peopleListContext.People // load person with languages
+                .Where(c => c.PersonId == personLanguageViewModel.PersonId)
+                .Include(f => f.LanguagesLink).ThenInclude(g => g.Language)
+                .First();
+
+            List<Language> dbLangList = _peopleListContext.Languages.ToList();
+
+            foreach (string id in personLanguageViewModel.SelectedListBoxView)
+            {
+                Language foundLang = dbLangList.Find(la => la.LanguageId == Convert.ToInt32(id));
+
+                updatePersonLang.LanguagesLink = new List<PersonLanguage>
+                {
+                    new PersonLanguage
+                    {
+                    Person = updatePersonLang,
+                    Language = foundLang
+                    }
+                };
+            }
+
+            nrStates =_peopleListContext.SaveChanges();
+
+            if (nrStates > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
         
+
+
         public List<Person> Read()
         {
-            List<Person> pList = _peopleListContext.People.ToList();
+            List<Person> pList = _peopleListContext.People
+                .Include(d => d.City)
+                .Include(e => e.City.Country)
+                .Include(f => f.LanguagesLink).ThenInclude(g => g.Language)
+                .ToList();
 
             return pList;
         }
 
         public Person Read(int id)
         {
-            return _peopleListContext.People.Find(id);
+            Person person = _peopleListContext.People
+                .Where(c => c.PersonId == id)
+                .Include(d => d.City)
+                .Include(e => e.City.Country)
+                .Include(f => f.LanguagesLink).ThenInclude(g => g.Language)
+                .First();
+
+            return person;
         }
 
         public Person Update(Person person)
@@ -58,7 +104,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
             _peopleListContext.People.Remove(person);
             nrStates = _peopleListContext.SaveChanges();
 
-            if (nrStates == 1)
+            if (nrStates > 0)
             {
                 return true;
             }

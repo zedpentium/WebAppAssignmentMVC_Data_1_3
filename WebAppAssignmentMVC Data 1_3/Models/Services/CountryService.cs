@@ -17,7 +17,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public Country Add(CreateCountryViewModel country)
         {
-            //InMemoryPeopleRepo createAndStorePerson = new InMemoryPeopleRepo();
             Country madeCountry = _countryRepo.Create(country.CountryName);
 
             return madeCountry;
@@ -25,8 +24,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public CountryViewModel All()
         {
-            //InMemoryPeopleRepo pRepoList = new InMemoryPeopleRepo(); 
-
             CountryViewModel coViewMod = new CountryViewModel() { CountryListView = _countryRepo.Read() };  
 
             return coViewMod;
@@ -39,15 +36,14 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public CountryViewModel FindBy(CountryViewModel search)
         {
-            //InMemoryPeopleRepo loadListForSearch = new InMemoryPeopleRepo();
-
             search.CountryListView.Clear();
 
-            foreach (Country item in _countryRepo.Read())
+            List<Country> countryList = _countryRepo.Read();
+
+            foreach (Country item in countryList)
             {
                 if (item.CountryName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase))
                 {
-
                     search.CountryListView.Add(item);
                 }
             }

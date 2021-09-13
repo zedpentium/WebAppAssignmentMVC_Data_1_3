@@ -7,7 +7,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 {
     public interface ICityRepo
     {
-        City Create(string cityName);
+        City Create(string cityName, Country country);
 
 
         List<City> Read();

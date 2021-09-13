@@ -19,7 +19,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public City Add(CreateCityViewModel cityViewModel)
         {
-            City madeCity = _cityRepo.Create(cityViewModel.CityName);
+            City madeCity = _cityRepo.Create(cityViewModel.CityName, cityViewModel.Country);
 
             return madeCity;
         }
@@ -76,12 +76,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
             return success;
         }
 
-        public void CreateBaseCities()
+        public void CreateBaseCities(List<Country> countries)
         {
-            _cityRepo.Create("Skövde");
-            _cityRepo.Create("Trondheim");
-            _cityRepo.Create("Kelontekemä");
-            _cityRepo.Create("Eindhoven");
+            _cityRepo.Create("Skövde", countries[0]);
+            _cityRepo.Create("Trondheim", countries[1]);
+            _cityRepo.Create("Kelontekemä", countries[2]);
+            _cityRepo.Create("Eindhoven", countries[3]);
         }
 
 

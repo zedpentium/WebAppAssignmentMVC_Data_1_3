@@ -1,14 +1,14 @@
 ﻿@model PeopleViewModel
 
 <div>
-    <h4>@ViewBag.Title</h4>
-    <p>Eric R WebAppAssignmentMVC_Data_2</p>
+    <h4>Add & Edit Person</h4>
 
     <div>
-        <br />
-        <P id="actionMessage">@ViewBag.Mess</P>
-        <p>@ViewBag.BaseCityList</p>
-        <p>@ViewBag.BasePersonList</p>
+        <p id="actionMessage">@ViewBag.Mess</p>
+        <div>
+            <p>@ViewBag.BaseLanguageList, @ViewBag.BaseCountryList, @ViewBag.BaseCityList, @ViewBag.BasePersonList </p>
+            <br />
+        </div>
     </div>
 
     <div class="flexwrap">
@@ -17,7 +17,6 @@
             <fieldset id="fieldsetbox">
                 <legend id="legbox">Filter list by search</legend>
                 <form asp-action="Index" method="post" role="form">
-
                     @Html.AntiForgeryToken()
                     <label asp-for="FilterString"></label>
                     <br />
@@ -25,11 +24,9 @@
                     <br />
                     <br />
                     <input type="submit" class="btn btn-primary" name="btnFilter" value="Search" />
-
+                    <input type="button" class="btn btn-secondary" name="btnReset" value="Reset Search" onClick="location.href='@Url.Action("Index", "People")'" />
                 </form>
-                <br />
-                <br />
-                <input type="button" class="btn btn-primary" name="btnReset" value="Reset Search" onClick="location.href='@Url.Action("Index", "People")'" />
+                <p>@Model.SearchResultEmpty</p>
             </fieldset>
         </div>
 
@@ -56,9 +53,14 @@
                         <br />
                         <select asp-for="PersonCity">
                             <option value="" disabled>Select a City</option>
-                            @foreach (City city in Model.CityListView)
-                            {
-                                <option value="@city">@city.CityName</option>
+                            @{
+                                if (Model.CityListView != null)
+                                {
+                                    foreach (City city in Model.CityListView)
+                                    {
+                                        <option value="@city.CityId">@city.CityName</option>
+                                    }
+                                }
                             }
                         </select>
                         <br />

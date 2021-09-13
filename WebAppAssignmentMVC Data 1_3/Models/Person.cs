@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebAppAssignmentMVC_Data_1_3.Models
 {
@@ -7,21 +8,27 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         private string _personName;
         private string _personPhoneNumber;
-        private City _city;
+
 
         public Person()
         { }
 
-        public Person(string personName, string personPhoneNumber, City personCity)
+        /*public Person(List<Language> languages)
+        {
+            Languages = languages;
+        }*/
+
+        public Person(string personName, string personPhoneNumber, City city)
         {
 
             PersonName = personName;
             PersonPhoneNumber = personPhoneNumber;
-            City = personCity;
+            City = city;
         }
 
-        [Key]
-        public int PersonId { get; }
+
+
+        public int PersonId { get; set; }
 
 
         public string PersonName
@@ -37,14 +44,13 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
             set { _personPhoneNumber = value; }
         }
 
-        public City City
-        {
-            get { return _city; }
-            set { _city = value; }
-        }
+        public int CityId { get; set; }
 
-        public int CityForeignKey { get; set; }
+        public City City { get; set; }
 
 
+        public ICollection<PersonLanguage> LanguagesLink { get; set; } // Join table-navigation-relation EF Core Specific with no lazy loading /ER
+
+        //public List<Language> Languages { get; set; } // commented out to get many-to-many to work in EF Core  /ER
     }
 }

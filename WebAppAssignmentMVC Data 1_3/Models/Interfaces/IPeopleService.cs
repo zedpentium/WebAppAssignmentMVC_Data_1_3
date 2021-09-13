@@ -9,6 +9,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
     {
         Person Add(CreatePersonViewModel person);
 
+        public bool AddLanguageToPerson(PersonLanguageViewModel personLanguageViewModel);
+
         PeopleViewModel All();
 
         PeopleViewModel FindBy(PeopleViewModel search);

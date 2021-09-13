@@ -19,7 +19,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         bool Remove(int id);
 
-        void CreateBaseCities();
+        void CreateBaseCities(List<Country> countries);
 
     }
 }

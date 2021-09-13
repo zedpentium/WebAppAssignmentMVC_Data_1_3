@@ -8,16 +8,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
     {
         private string _countryName;
 
-
-        public List<City> Cities { get; set; } // Navigation prop Cities(many) to Country(one) ER
-
-
         public Country(string countryName)
         {
             CountryName = countryName;
         }
 
-        [Key]
+
         public int CountryId { get; }
 
 
@@ -27,6 +23,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
             set { _countryName = value; }
         }
 
-
+        public List<City> Cities { get; set; } // Navigation prop Cities(many) to Country(one) ER
     }
 }

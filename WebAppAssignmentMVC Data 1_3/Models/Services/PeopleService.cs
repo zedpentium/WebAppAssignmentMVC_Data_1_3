@@ -19,15 +19,28 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public Person Add(CreatePersonViewModel person)
         {
-            //InMemoryPeopleRepo createAndStorePerson = new InMemoryPeopleRepo();
-            Person madePerson = _peopleRepo.Create(person.PersonName, person.PersonPhoneNumber, person.PersonCity);
+            City city = person.Cities.Find(c => c.CityId == Convert.ToInt32(person.PersonCity));
+            Person madePerson = _peopleRepo.Create(person.PersonName, person.PersonPhoneNumber, city);
 
             return madePerson;
         }
 
+        public bool AddLanguageToPerson(PersonLanguageViewModel personLanguageViewModel)
+        {
+ 
+            bool success = _peopleRepo.AddLanguageToPerson(personLanguageViewModel);
+
+            if(success) {
+                return true;
+                    }
+            else { return false; }
+        }
+
         public PeopleViewModel All()
         {
-            PeopleViewModel pViewMod = new PeopleViewModel() { PeopleListView = _peopleRepo.Read() };  
+            PeopleViewModel pViewMod = new PeopleViewModel()
+            { PeopleListView = _peopleRepo.Read(),
+            };
 
             return pViewMod;
         }
@@ -39,15 +52,16 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public PeopleViewModel FindBy(PeopleViewModel search)
         {
-            //InMemoryPeopleRepo loadListForSearch = new InMemoryPeopleRepo();
-
             search.PeopleListView.Clear();
 
-            foreach (Person item in _peopleRepo.Read())
-            {
-                if (item.PersonName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase))
-                {
+            List<Person> personList = _peopleRepo.Read();
 
+            foreach (Person item in personList)
+            {
+                if (item.PersonName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase) ||
+                    item.City.CityName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase) /*||
+                    item.PersonLanguages.LanguageName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase)*/)
+                {
                     search.PeopleListView.Add(item);
                 }
             }
@@ -66,7 +80,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public Person FindBy(int id)
         {
-            //InMemoryPeopleRepo findPersonById = new InMemoryPeopleRepo();
             Person foundPerson = _peopleRepo.Read(id);
 
             return foundPerson;
@@ -74,7 +87,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         public bool Remove(int id)
         {
-            //InMemoryPeopleRepo deletePersonFromRepo = new InMemoryPeopleRepo();
             Person personToDelete = _peopleRepo.Read(id);
 
             if(personToDelete != null)
@@ -87,12 +99,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
             return false;
         }
 
-        public void CreateBasePeople(List<City> cList)
+        public void CreateBasePeople(List<City> cities)
         {
-            _peopleRepo.Create("Eric Rönnhult", "0777 777777", cList[0]);
-            _peopleRepo.Create("Bosse Bus", "0777 777777", cList[1]);
-            _peopleRepo.Create("Kjell Kriminell", "0777 777777", cList[2]);
-            _peopleRepo.Create("Anders Rolle", "0777 777777", cList[3]);
+            _peopleRepo.Create("Eric Rönnhult", "0777 777777", cities[0]);
+            _peopleRepo.Create("Bosse Bus", "0777 777777", cities[1]);
+            _peopleRepo.Create("Kjell Kriminell", "0777 777777", cities[2]);
+            _peopleRepo.Create("Anders Rolle", "0777 777777", cities[3]);
 
         }
     }

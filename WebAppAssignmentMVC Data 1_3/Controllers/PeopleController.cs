@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WebAppAssignmentMVC_Data_1_3.Models;
 using WebAppAssignmentMVC_Data_1_3.Data;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
@@ -17,115 +18,205 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         private readonly IPeopleService _peopleService;
         private readonly ICityService _cityService;
         private readonly ICountryService _countryService;
+        private readonly ILanguageService _languageService;
 
-        public PeopleController(IPeopleService peopleService, ICityService cityService, ICountryService countryService)
+        public PeopleController(IPeopleService peopleService, ICityService cityService, ICountryService countryService, ILanguageService languageService)
         {
             _peopleService = peopleService;
             _cityService = cityService;
             _countryService = countryService;
-        }
-
-        /*public PeopleController(ICityService cityService)
-        {
-            _cityService = cityService;
-        }*/
-
-
-        public PartialViewResult PersonList()
-        {
-            return PartialView("_PeopleListPartial");
+            _languageService = languageService;
         }
 
 
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.Title = "Eric R Project. This view will generate cities and persons if database is blank";
+            PeopleViewModel peopleViewModel = CheckIfEmptyDBTables(); // Check if certain DB-Tables are empty. If yes, then add some.";
 
-            PeopleViewModel peopleViewModel = new PeopleViewModel()
-            { 
-                PeopleListView = _peopleService.All().PeopleListView,
-                CityListView = _cityService.All().CityListView,
-            };
+            CreatePersonViewModel citylist = new CreatePersonViewModel() { Cities = peopleViewModel.CityListView };
 
-
-            /*if (peopleViewModel.CountryListView.Count == 0 || peopleViewModel.CountryListView == null) // commented out coz not using country atm
-            {
-                _countryService.CreateBaseCountries();  // to generate 4 persons in Repo
-                ViewBag.BaseCountryList = "Database was empty, added cities into it.";
-                peopleViewModel.CountryListView = _countryService.All().CountryListView;
-            }*/
-
-            if (peopleViewModel.CityListView.Count == 0 || peopleViewModel.CityListView == null)
-            {
-                _cityService.CreateBaseCities();  // to generate 4 persons in Repo
-                ViewBag.BaseCityList = "Database was empty, added cities into it.";
-                peopleViewModel.CityListView = _cityService.All().CityListView;
-            }
-
-            if (peopleViewModel.PeopleListView.Count == 0 || peopleViewModel.PeopleListView == null)
-            {
-                _peopleService.CreateBasePeople(peopleViewModel.CityListView);  // to generate 4 persons in Repo
-                ViewBag.BasePersonList = "Database was empty, added peoples into it.";
-                peopleViewModel.PeopleListView = _peopleService.All().PeopleListView;
-            }
-
-            return View(peopleViewModel);
+            return View("Index", peopleViewModel);
         }
 
         [HttpPost]
-        public IActionResult Index(PeopleViewModel viewModel)
+        public IActionResult Index(PeopleViewModel peopleViewModel) //Find by model
         {
-            PeopleViewModel peopleViewModel = new PeopleViewModel()
-            { 
-                PeopleListView = _peopleService.FindBy(viewModel).PeopleListView,
-                CityListView = _cityService.All().CityListView,
-            };
+            //PeopleViewModel peopleViewModel2 = new PeopleViewModel();
+            //peopleViewModel2 = peopleViewModel;
+            peopleViewModel = _peopleService.FindBy(peopleViewModel);
 
-                return View(peopleViewModel); 
+            /*peopleViewModel2.PersonName = peopleViewModel.PersonName;
+            peopleViewModel2.PersonPhoneNumber = peopleViewModel.PersonPhoneNumber;
+            peopleViewModel2.CityListView = peopleViewModel.CityListView;*/
+
+            return View("Index", peopleViewModel); 
         }
 
 
         [HttpPost]
-        public IActionResult CreatePerson(CreatePersonViewModel personViewModel) // set / HttpPost
+        public IActionResult CreatePerson(CreatePersonViewModel createPersonViewModel) // set / HttpPost
         {
 
-            var newModel = new PeopleViewModel();
+
+            PeopleViewModel peopleViewModel = new PeopleViewModel();
+
+            List<City> cityL = _cityService.All().CityListView;
+            createPersonViewModel.Cities = cityL;
+
+            peopleViewModel.PersonName = createPersonViewModel.PersonName;
+            peopleViewModel.PersonPhoneNumber = createPersonViewModel.PersonPhoneNumber;
+            peopleViewModel.CityListView = cityL;
+
 
             if (ModelState.IsValid)
                 {
 
-                newModel.PersonName = personViewModel.PersonName;
-                newModel.PersonPhoneNumber = personViewModel.PersonPhoneNumber;
-                newModel.PersonCity = personViewModel.PersonCity;
-
-                newModel.PeopleListView = _peopleService.All().PeopleListView;
-
-
-                _peopleService.Add(personViewModel);
+                _peopleService.Add(createPersonViewModel);
 
                     ViewBag.Mess = "Person Added!";
 
-                    return View("Index", newModel);
+                peopleViewModel.PeopleListView = _peopleService.All().PeopleListView;
+
+                return View("Index", peopleViewModel);
                 }
 
-            newModel.PersonName = personViewModel.PersonName;
-            newModel.PersonPhoneNumber = personViewModel.PersonPhoneNumber;
-            newModel.PersonCity = personViewModel.PersonCity;
+            peopleViewModel.PeopleListView = _peopleService.All().PeopleListView;
 
-            newModel.PeopleListView = _peopleService.All().PeopleListView;
-
-            return View("index", newModel);
+            return View("index", peopleViewModel);
         }
 
 
         public IActionResult DeletePerson(int id)
         {
-            //PeopleService deleteById = new PeopleService();
             _peopleService.Remove(id);
 
             return RedirectToAction("Index");
         }
+
+
+        // ---------------  Special Actions below ---------------
+
+        public IActionResult PersonDetails(int id)
+        {
+            Person personDetails = _peopleService.FindBy(id);
+
+            return View("Details", personDetails);
+        }
+
+
+
+        public IActionResult AddLanguageView(int id)
+        {
+            PersonLanguageViewModel personLanguageViewModel = new PersonLanguageViewModel()
+            {
+                LanguageListView = _languageService.All().LanguageListView,
+                Person = _peopleService.FindBy(id)
+            };
+
+            PersonLanguageViewModel selectlistDone = GenerateSelectList(personLanguageViewModel);
+            
+            return View("AddLanguagesToPerson", selectlistDone);
+        }
+
+
+
+        public IActionResult AddLanguageToPerson(PersonLanguageViewModel personLanguageViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                bool success = _peopleService.AddLanguageToPerson(personLanguageViewModel);
+
+                if (success) { ViewBag.Mess = "Languages added to Person!"; }
+                else { ViewBag.Mess = "Error! Language did NOT get stored"; }
+
+                return RedirectToAction("AddLanguageView");
+            }
+
+            return View("AddLanguagesToPerson", personLanguageViewModel);
+        }
+
+
+
+        // -------------- Normal Methods below -------------------
+
+        public PeopleViewModel CheckIfEmptyDBTables()
+        {
+            PeopleViewModel peopleViewModel = new PeopleViewModel()
+            {
+                PeopleListView = _peopleService.All().PeopleListView,
+                CityListView = _cityService.All().CityListView,
+                CountryListView = _countryService.All().CountryListView,
+                LanguageListView = _languageService.All().LanguageListView
+            };
+
+            if (peopleViewModel.LanguageListView.Count == 0 || peopleViewModel.LanguageListView == null)
+            {
+                _languageService.CreateBaseLanguages();
+                ViewBag.BaseLanguageList = "Language-table was empty, added languages into it. ";
+                peopleViewModel.LanguageListView = _languageService.All().LanguageListView;
+            }
+
+            if (peopleViewModel.CountryListView.Count == 0 || peopleViewModel.CountryListView == null)
+            {
+                _countryService.CreateBaseCountries();
+                ViewBag.BaseCountryList = "Country-table was empty, added cities into it. ";
+                peopleViewModel.CountryListView = _countryService.All().CountryListView;
+            }
+
+            if (peopleViewModel.CityListView.Count == 0 || peopleViewModel.CityListView == null)
+            {
+                _cityService.CreateBaseCities(peopleViewModel.CountryListView);
+                ViewBag.BaseCityList = "City-table was empty, added cities into it, and a country per city. ";
+                peopleViewModel.CityListView = _cityService.All().CityListView;
+            }
+
+            if (peopleViewModel.PeopleListView.Count == 0 || peopleViewModel.PeopleListView == null)
+            {
+                _peopleService.CreateBasePeople(peopleViewModel.CityListView);
+                ViewBag.BasePersonList = "Person-table was empty, added peoples into it. ";
+                peopleViewModel.PeopleListView = _peopleService.All().PeopleListView;
+            }
+
+            return peopleViewModel;
+
+        }
+
+
+        public PersonLanguageViewModel GenerateSelectList(PersonLanguageViewModel personLanguageViewModel)
+        {
+            List<Language> listPeronsLang = new List<Language>(); // list to add languages that a person might have allready
+            List<SelectListItem> generatedList = new List<SelectListItem>();
+
+            foreach (PersonLanguage language in personLanguageViewModel.Person.LanguagesLink.ToList())
+            {
+                listPeronsLang.Add(language.Language);
+            }
+
+            bool IsSelected; // to hold true or false for those languages a person might allready have
+
+            foreach (Language languageItem in personLanguageViewModel.LanguageListView)
+            {
+                Language personLangID = listPeronsLang.Find(id => id.LanguageId == languageItem.LanguageId);
+
+                if (personLangID != null) // IsSelected is True if equal, false if not equal
+                { IsSelected = languageItem.LanguageId == personLangID.LanguageId; } 
+                else { IsSelected = false; }
+
+                SelectListItem selectList = new SelectListItem()
+                {
+                    Text = languageItem.LanguageName,
+                    Value = languageItem.LanguageId.ToString(),
+                    Selected = IsSelected
+                };
+                generatedList.Add(selectList);
+            }
+            personLanguageViewModel.LanguageSelectList = generatedList;
+
+            return personLanguageViewModel;
+        }
+
+
 
 
     }

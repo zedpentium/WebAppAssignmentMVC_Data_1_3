@@ -44,10 +44,12 @@ namespace WebAppAssignmentMVC_Data_1_3
             services.AddScoped<IPeopleRepo, DbPeopleRepo>();
             services.AddScoped<ICountryRepo, DbCountryRepo>();
             services.AddScoped<ICityRepo, DbCityRepo>();
+            services.AddScoped<ILanguageRepo, DbLanguageRepo>();
 
             services.AddScoped<IPeopleService, PeopleService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICityService, CityService>();
+            services.AddScoped<ILanguageService, LanguageService>();
 
             //services.AddRazorPages();
         }
@@ -81,11 +83,35 @@ namespace WebAppAssignmentMVC_Data_1_3
                 name: "AjaxSPA",
                 pattern: "Ajax/{id?}",
                 defaults: new { controller = "Ajax", action = "Index" });
-                
+
+                endpoints.MapControllerRoute(
+                name: "City",
+                pattern: "City/{id?}",
+                defaults: new { controller = "City", action = "Index" });
+
+                endpoints.MapControllerRoute(
+                name: "Country",
+                pattern: "Country/{id?}",
+                defaults: new { controller = "Country", action = "Index" });
+
+                endpoints.MapControllerRoute(
+                name: "Language",
+                pattern: "Language/{id?}",
+                defaults: new { controller = "Language", action = "Index" });
+
+                endpoints.MapControllerRoute(
+                name: "AddLanguages",
+                pattern: "AddLanguagesToPerson/{id?}",
+                defaults: new { controller = "People", action = "AddLanguageView" });
+
+                endpoints.MapControllerRoute(
+                name: "PersonDetails",
+                pattern: "Details/{id?}",
+                defaults: new { controller = "People", action = "PersonDetails" });
 
                 endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=People}/{action=Index}");
+                pattern: "{controller=People}/{action=Index}/{id?}");
             });
         }
     }

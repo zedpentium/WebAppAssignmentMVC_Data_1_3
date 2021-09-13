@@ -1,22 +1,31 @@
 ﻿@model PeopleViewModel
 
-               <div class="container">
-                   <div class="row bg-dark text-light">
-                       <div class="col-1">PersonId</div>
-                       <div class="col-3">Name</div>
-                       <div class="col-3">PhoneNumber</div>
-                       <div class="col-3">City</div>
-                       <div class="col-2">Option</div>
-                   </div>
-                   @foreach (var person in Model.PeopleListView)
-                   {
-                   <div class="row">
-                       <div class="col-1">@person.PersonId</div>
-                       <div class="col-3">@person.PersonName</div>
-                       <div class="col-3">@person.PersonPhoneNumber</div>
-                       <div class="col-3">@person.City.CityName</div>
-                       <div class="col-2"><a href="#" onClick="location.href='@Url.Action("DeletePerson", "People" , new { id=@person.PersonId })'">Delete</a></div>
-                   </div>
-                   }
-               </div>
+<div class="container">
+    <div class="row bg-dark text-light">
+        <div class="col-1">PersonId</div>
+        <div class="col-3">Name</div>
+        <div class="col-2">PhoneNumber</div>
+        <div class="col-2">City</div>
+        <div class="col-2">Country</div>
+        <div class="col-2">Option</div>
+    </div>
+    @foreach (Person person in Model.PeopleListView)
+    {
+        <div class="row">
+            <div class="col-1">@person.PersonId</div>
+            <div class="col-3">@person.PersonName</div>
+            <div class="col-2">@person.PersonPhoneNumber</div>
+            <div class="col-2">@person.City.CityName</div>
+            <div class="col-2">@person.City.Country.CountryName</div>
+            <div class="col-2" id="btnBorderBox">
+                <a id="optionBtnGreen" href="@Url.Action("AddLanguageView", "People", new { id = @person.PersonId })">Add Language(s)</a>
+                <br />
+                <a id="optionBtnGreen" href="@Url.Action("PersonDetails", "People", new { id = @person.PersonId })">Details</a>
+                <br />
+                <a id="optionBtnRed" href="@Url.Action("DeletePerson", "People" , new { id = @person.PersonId, onclick = "return confirm('Are you sure you wish to delete this?');" })">Delete</a>
+            </div>
+        </div>
+    }
+
+</div>
 

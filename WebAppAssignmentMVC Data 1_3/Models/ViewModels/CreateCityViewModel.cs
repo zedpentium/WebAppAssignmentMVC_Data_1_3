@@ -14,6 +14,11 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         [Display(Name = "City")]
         public string CityName { get; set; }
 
+        [DataType(DataType.Text)]
+        [Required(ErrorMessage = "* Please choose country"), MaxLength(50)]
+        [Display(Name = "Country")]
+        public Country Country { get; set; }
+
     }  
      
 }

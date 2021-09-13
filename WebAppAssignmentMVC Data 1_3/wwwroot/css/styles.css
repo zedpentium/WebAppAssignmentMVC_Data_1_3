@@ -252,3 +252,25 @@ div#navmenuright {
 #actionMessage {
     border: 2px solid black;
 }
+
+#optionBtnGreen {
+    background-color: green;
+}
+
+#optionBtnBlue {
+    background-color: blue;
+}
+
+#optionBtnRed {
+    background-color: red;
+}
+
+#btnBorderBox {
+    border: 1px solid rgb(216, 216, 216);
+}
+
+#SelectedListBoxView {
+    width: 200px;
+}
+
+

@@ -7,9 +7,11 @@ using System.ComponentModel.DataAnnotations;
 namespace WebAppAssignmentMVC_Data_1_3.Models
 {
 
-    public class CityViewModel
+    public class CityViewModel : CreateCityViewModel
     { 
         public List<City> CityListView { get; set; }
+
+        public List<Country> CountryListView { get; set; }
 
 
         public string FilterString { get; set; }

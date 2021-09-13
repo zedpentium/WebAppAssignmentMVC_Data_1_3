@@ -15,12 +15,14 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         private readonly IPeopleService _peopleService;
         private readonly ICityService _cityService;
         private readonly ICountryService _countryService;
+        private readonly ILanguageService _languageService;
 
-        public AjaxController(IPeopleService peopleService, ICityService cityService, ICountryService countryService)
+        public AjaxController(IPeopleService peopleService, ICityService cityService, ICountryService countryService, ILanguageService languageService)
         {
             _peopleService = peopleService;
             _cityService = cityService;
             _countryService = countryService;
+            _languageService = languageService;
         }
 
 

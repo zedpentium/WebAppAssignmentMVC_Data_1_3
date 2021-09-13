@@ -11,7 +11,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
     { 
         public List<Person> PeopleListView { get; set; }
         public List<City> CityListView { get; set; }
-        // public List<Country> CountryListView { get; set; } // not used atm
+        public List<Language> LanguageListView { get; set; }
+        public List<Country> CountryListView { get; set; }
+
+        public Person Person { get; set; }
+        public Language Language { get; set; }
+        public List<Language> SelectedLanguageListToAdd { get; set; }
 
 
         public string FilterString { get; set; }
@@ -24,6 +29,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         {
             PeopleListView = new List<Person>();
         }
-
+        
     }
 }

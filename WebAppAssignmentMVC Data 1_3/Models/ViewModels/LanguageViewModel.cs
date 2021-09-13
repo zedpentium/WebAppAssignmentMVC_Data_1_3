@@ -7,9 +7,9 @@ using System.ComponentModel.DataAnnotations;
 namespace WebAppAssignmentMVC_Data_1_3.Models
 {
 
-    public class CountryViewModel : CreateCountryViewModel
+    public class LanguageViewModel : CreateLanguageViewModel
     { 
-        public List<Country> CountryListView { get; set; }
+        public List<Language> LanguageListView { get; set; }
 
 
         public string FilterString { get; set; }
@@ -17,11 +17,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
         public string SearchResultEmpty { get; set; }
 
 
-        
-        public CountryViewModel()
+        public LanguageViewModel()
         {
-            CountryListView = new List<Country>();
+            LanguageListView = new List<Language>();
         }
-        
+
     }
 }

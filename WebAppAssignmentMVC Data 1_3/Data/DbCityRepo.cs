@@ -22,9 +22,9 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
         }
 
  
-        public City Create(string cityName)
+        public City Create(string cityName, Country country)
         {
-            City newCity = new City(cityName);
+            City newCity = new City(cityName, country);
 
             _cityListContext.Add(newCity);
             _cityListContext.SaveChanges();
@@ -35,14 +35,21 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
 
         public List<City> Read()
         {
-            List<City> cList = _cityListContext.Cities.ToList();
+            List<City> cList = _cityListContext.Cities
+                .Include(c => c.Country)
+                .ToList();
 
             return cList;
         }
 
         public City Read(int id)
         {
-            return _cityListContext.Cities.Find(id);
+            City cList = _cityListContext.Cities
+                .Where(c => c.CityId == id)
+                .Include(c => c.Country)
+                .FirstOrDefault();
+
+            return cList;
         }
 
         public City Update(City city)

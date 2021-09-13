@@ -15,6 +15,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
         public DbSet<Person> People { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<PersonLanguage> PersonLanguages { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -25,33 +27,101 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Person>()
-            .HasKey(en => en.PersonId)
-            .HasName("PrimaryKey_PersonId");
 
+            // Setting Primarykeys, instead of [Key] in code. One place to handle all of it /ER
             modelBuilder.Entity<Person>()
-                .HasOne(con => con.City)
-                .WithMany(cit => cit.People)
-                .HasForeignKey(con => con.CityForeignKey);
+                .HasKey(mb => mb.PersonId);
+                //.HasName("PrimaryKey_PersonId"); // for reference that i CAN change the name /ER
 
             modelBuilder.Entity<City>()
-                .HasKey(en => en.CityId)
-                .HasName("PrimaryKey_CityId");
-
-
+                .HasKey(mb => mb.CityId);
 
             modelBuilder.Entity<Country>()
-             .HasKey(en => en.CountryId)
-             .HasName("PrimaryKey_CountryId");
+                .HasKey(mb => mb.CountryId);
+
+            modelBuilder.Entity<Language>()
+                .HasKey(mb => mb.LanguageId);
+
+            
 
 
-            /*modelBuilder.Entity<City>()
-                .HasOne(con => con.City)
-                .WithMany(cit => cit.People)
-                .HasForeignKey(con => con.ForeignKey_CountryId);*/
+            // Setting up One-to-Many
+            modelBuilder.Entity<Person>()
+                 .HasOne(mbo => mbo.City);
+
+            modelBuilder.Entity<City>()
+                 .HasMany(mbm => mbm.People);
 
 
 
+            modelBuilder.Entity<City>()
+                .HasOne(mbo => mbo.Country);
+
+            modelBuilder.Entity<Country>()
+                .HasMany(mbm => mbm.Cities);
+
+
+            /*modelBuilder.Entity<Person>()
+                 .HasMany(p => p.Languages);
+
+            modelBuilder.Entity<Language>()
+                 .HasMany(la => la.People);*/
+
+
+
+            // Setting up the join-table for the mutual many-to-many bind/relationship
+            modelBuilder.Entity<PersonLanguage>()  // EF Core 3.x specific. Join table /ER
+                .HasKey(pl => new { pl.PersonId, pl.LanguageId });
+
+            modelBuilder.Entity<PersonLanguage>() // One Person to Many Languages
+                .HasOne(ec => ec.Person)
+                .WithMany(e => e.LanguagesLink)
+                .HasForeignKey(ec => ec.PersonId);
+
+            modelBuilder.Entity<PersonLanguage>()  // One Language to Many People
+                .HasOne(ec => ec.Language)
+                .WithMany(c => c.PeopleLink)
+                .HasForeignKey(ec => ec.LanguageId);
+
+
+
+          /*  modelBuilder.Entity<Person>()
+                .HasMany(t => t.Languages)
+                .WithMany(t => t.Courses)
+    .Map(m =>
+    {
+        m.ToTable("PersonLanguage");
+        m.MapLeftKey("PersonId");
+        m.MapRightKey("LanguageId");
+    });
+          */
+
+
+
+
+            /* modelBuilder.Entity<Person>()
+                 .HasMany(x => x.Languages)
+                 .WithMany<Person>(x => x.People)
+                 .UsingEntity<PersonLanguage>(
+                     x => x.HasOne(x => x.Language)
+                     .WithMany().HasForeignKey(x => x.LanguageId),
+                     x => x.HasOne(x => x.Person)
+                    .WithMany().HasForeignKey(x => x.PersonId));*/
+
+
+
+
+
+
+            /*modelBuilder.Entity<PersonLanguage>()  Is not needed coz, 2 one-to many, and joining entity with same names is enough /ER 
+                .HasOne(pt => pt.Person)
+                .WithMany(p => p.PersonLanguages)
+                .HasForeignKey(pt => pt.PersonId);
+
+            modelBuilder.Entity<PersonLanguage>()
+                .HasOne(pt => pt.Language)
+                .WithMany(t => t.PersonLanguages)
+                .HasForeignKey(pt => pt.LanguageId);*/
         }
 
 

@@ -41,8 +41,6 @@ function displayMessage(msg) {
     document.getElementById(jsmessage).textContent = msg;
 }
 
-
-
 function displayError(error) {
     document.getElementById("error").innerHTML = JSON.stringify(error);
 }

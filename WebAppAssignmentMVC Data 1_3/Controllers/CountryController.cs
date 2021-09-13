@@ -10,7 +10,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
     public class CountryController : Controller
     {
-        //All new PeopleService() is now replaced by DI via this Constructor, and using _peopleService instead /ER
         private readonly ICountryService _countryService;
 
         public CountryController(ICountryService countryService)
@@ -22,30 +21,58 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            CountryViewModel countryViewModel = new CountryViewModel()
+            {
+                CountryListView = _countryService.All().CountryListView,
+            };
+
+            return View("Index", countryViewModel);
         }
 
-        [HttpGet]
-        public IActionResult AllPeopleList()
+        [HttpPost]
+        public IActionResult Index(CountryViewModel countryViewModel)
         {
-            //PeopleService checkListView = new PeopleService();
-            List<Country> countryList = _countryService.All().CountryListView;
+            CountryViewModel countryViewModel2 = _countryService.FindBy(countryViewModel);
 
-            return PartialView("_CountryListPartial", countryList);
-
+            return View("Index", countryViewModel2);
         }
+
+
+        [HttpPost]
+        public IActionResult CreateCountry(CreateCountryViewModel createCountryViewModel) // set / HttpPost
+        {
+
+            CountryViewModel newModel = new CountryViewModel();
+
+            if (ModelState.IsValid)
+            {
+                _countryService.Add(createCountryViewModel);
+
+                newModel.CountryListView = _countryService.All().CountryListView;
+
+                ViewBag.Mess = "Country Added!";
+
+                return View("Index", newModel);
+            }
+
+            newModel.CountryName = createCountryViewModel.CountryName;
+
+            newModel.CountryListView = _countryService.All().CountryListView;
+
+            return View("index", newModel);
+        }
+
 
         [HttpPost]
         public IActionResult FindCountryById(int id)
         {
-            //PeopleService filterString = new PeopleService();
             Country foundCountry = _countryService.FindBy(id);
 
             if (foundCountry != null)
             {
                 List<Country> addCountry = new List<Country>() { foundCountry };
 
-                return PartialView("_PeopleListPartial", addCountry);
+                return PartialView("_CountryListPartial", addCountry);
             }
 
             return StatusCode(404);
@@ -55,7 +82,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         [HttpPost]
         public IActionResult DeleteCountryById(int id)
         {
-            //PeopleService filterString = new PeopleService();
             bool success = _countryService.Remove(id);
 
             if (success)
@@ -67,7 +93,11 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 
         }
 
+        public IActionResult DeleteCountry(int id)
+        {
+            _countryService.Remove(id);
 
-
+            return RedirectToAction("Index");
+        }
     }
 }
