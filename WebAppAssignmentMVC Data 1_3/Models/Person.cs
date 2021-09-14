@@ -50,7 +50,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Models
 
         //public List<Language> Languages { get; set; } // commented out to get many-to-many to work in EF Core  /ER
 
-        public List<PersonLanguage> PersonLanguages { get; set; } = new List<PersonLanguage>();// Join table-navigation-relation EF Core Specific with no lazy loading /ER
+        public List<PersonLanguage> PersonLanguages { get; set; } //= new List<PersonLanguage>();// Join table-navigation-relation EF Core Specific with no lazy loading /ER
 
 
     }
