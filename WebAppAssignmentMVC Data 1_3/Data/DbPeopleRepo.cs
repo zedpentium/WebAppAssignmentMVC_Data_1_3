@@ -39,66 +39,22 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
                 .ThenInclude(g => g.Language)
                 .First();
 
-
-
             List<Language> dbLangList = _peopleListContext.Languages.ToList();
 
-            //List<PersonLanguage> dbLangList = _peopleListContext.Languages.ToList();
-
-            //List<PersonLanguage> foundLang = new List<PersonLanguage>();
-            //List<Language> foundLang = new List<Language>();
             Language foundLang = new Language();
 
-            /*int placeHold = 0;
-            PersonLanguage foundLang = new PersonLanguage(personLanguageViewModel.PersonId, placeHold);
-            List<PersonLanguage> listAddLang = new List<PersonLanguage>();*/
+            // Make new list of PersonLanguage associated with that PersonId above.
+            // And make the correct object-path build.   Person.List<PersonLanguage>.PersonLanguage.Language 
+            var addPersonLang = new List<PersonLanguage> { };
 
-
-
-            //PersonLanguage personLanguage = new PersonLanguage(personLanguageViewModel.PersonId, placeHold);
-
-
-            foreach (string id in personLanguageViewModel.SelectedListBoxView) // SelectedListBoxView has the list of choosen languages IdNr as string
-            {
-                foundLang = dbLangList.Find(la => la.LanguageId == Convert.ToInt32(id));
-
-                //foundLang.Add(dbLangList.Find(la => la.LanguageId == Convert.ToInt32(id)));
-
-                //foundLang.Add(PersonLanguage Convert.ToInt32(id));
-
-                /*placeHold = Convert.ToInt32(id);
-                listAddLang.Add(foundLang);*/
-
-                /*foreach (var item in foundLang)
+                    foreach (string id in personLanguageViewModel.SelectedListBoxView)
                 {
+                    foundLang = dbLangList.Find(la => la.LanguageId == Convert.ToInt32(id));
+                    PersonLanguage personLanguage = new PersonLanguage() { Language = foundLang };
+                    addPersonLang.Add(personLanguage);
+                 }
 
-                }*/
-                /*using (var context = new _peopleListContext())
-                {
-                    // loads the book by it's ISBN
-                    var book = context.Books
-                        .Single(p => p.ISBN == "123456");
-
-                    // Do changes
-                    book.Price = 30;
-
-                    // Save changes
-                    context.SaveChanges();
-                }*/
-
-                updatePersonLang.PersonLanguages = new List<PersonLanguage>()
-                {
-                new PersonLanguage
-                {
-                    Language = foundLang
-                }
-                };
-
-                /*updatePersonLang = new Person
-                {
-                PersonLanguages = foundLang
-                };*/
-            }
+                updatePersonLang.PersonLanguages = addPersonLang;
 
 
             nrStates =_peopleListContext.SaveChanges();
