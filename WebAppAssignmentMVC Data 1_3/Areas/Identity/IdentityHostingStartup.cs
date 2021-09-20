@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebAppAssignmentMVC_Data_1_3.Data;
+using WebAppAssignmentMVC_Data_1_3.Areas.Identity.Data;
+using WebAppAssignmentMVC_Data_1_3.Models;
+using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
 
 [assembly: HostingStartup(typeof(WebAppAssignmentMVC_Data_1_3.Areas.Identity.IdentityHostingStartup))]
 namespace WebAppAssignmentMVC_Data_1_3.Areas.Identity
@@ -15,12 +17,26 @@ namespace WebAppAssignmentMVC_Data_1_3.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<IdentityContext>(options =>
+                services.AddDbContext<AppIdentityDbContext>(options =>
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("IdentityContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<IdentityContext>();
+                services.AddDefaultIdentity<IdentityAppUsers>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddRoles<IdentityRole>()
+                    .AddEntityFrameworkStores<AppIdentityDbContext>()
+                    .AddDefaultUI()
+                    .AddDefaultTokenProviders();
+
+                services.Configure<IdentityOptions>(options =>
+                {
+                    // Default Password settings.
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequiredUniqueChars = 1;
+                });
             });
         }
     }

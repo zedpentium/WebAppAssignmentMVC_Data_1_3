@@ -9,8 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebAppAssignmentMVC_Data_1_3.Models;
+using WebAppAssignmentMVC_Data_1_3.Models.Interfaces;
+using WebAppAssignmentMVC_Data_1_3.Models.Services;
 using WebAppAssignmentMVC_Data_1_3.Data;
+
 
 namespace WebAppAssignmentMVC_Data_1_3
 {
@@ -32,7 +34,7 @@ namespace WebAppAssignmentMVC_Data_1_3
 
             services.AddSession(options =>  // To use session state /ER
             {
-                options.Cookie.Name = ".EricRwebappmvcdata1_3.Session";
+                options.Cookie.Name = ".EricRwebappmvcdata.Session";
                 options.IdleTimeout = TimeSpan.FromSeconds(300);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
@@ -40,6 +42,8 @@ namespace WebAppAssignmentMVC_Data_1_3
 
             services.AddDbContext<PeopleDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("PeopleDb")));
+            //services.AddDbContext<PeopleDbContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("IdentityContextConnection")));
 
             services.AddScoped<IPeopleRepo, DbPeopleRepo>();
             services.AddScoped<ICountryRepo, DbCountryRepo>();
@@ -52,6 +56,11 @@ namespace WebAppAssignmentMVC_Data_1_3
             services.AddScoped<ILanguageService, LanguageService>();
 
             services.AddRazorPages();
+
+            services.ConfigureApplicationCookie(opts => // Custom Identity Access denied path /ER
+            {
+                opts.AccessDeniedPath = "/People/AccessDenied";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,26 +77,26 @@ namespace WebAppAssignmentMVC_Data_1_3
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession(); // To use session state /ER
+
+            app.UseAuthentication();
 
             app.UseRouting();
-
             app.UseAuthorization();
-
-            app.UseSession(); // To use session state /ER
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=People}/{action=Index}/{id?}");
+                
+                endpoints.MapControllerRoute(
                 name: "AjaxSPA",
                 pattern: "Ajax/{id?}",
                 defaults: new { controller = "Ajax", action = "Index" });
-
-                endpoints.MapControllerRoute(
-                name: "City",
-                pattern: "City/{id?}",
-                defaults: new { controller = "City", action = "Index" });
 
                 endpoints.MapControllerRoute(
                 name: "Country",
@@ -95,14 +104,14 @@ namespace WebAppAssignmentMVC_Data_1_3
                 defaults: new { controller = "Country", action = "Index" });
 
                 endpoints.MapControllerRoute(
+                name: "City",
+                pattern: "City/{id?}",
+                defaults: new { controller = "City", action = "Index" });
+
+                endpoints.MapControllerRoute(
                 name: "Language",
                 pattern: "Language/{id?}",
                 defaults: new { controller = "Language", action = "Index" });
-
-                endpoints.MapControllerRoute(
-                name: "AddLanguages",
-                pattern: "AddLanguagesToPerson/{id?}",
-                defaults: new { controller = "People", action = "AddLanguageView" });
 
                 endpoints.MapControllerRoute(
                 name: "PersonDetails",
@@ -110,13 +119,33 @@ namespace WebAppAssignmentMVC_Data_1_3
                 defaults: new { controller = "People", action = "PersonDetails" });
 
                 endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=People}/{action=Index}/{id?}");
+                name: "AddLanguages",
+                pattern: "AddLanguagesToPerson/{id?}",
+                defaults: new { controller = "People", action = "AddLanguageView" });
+
+                endpoints.MapRazorPages();
 
                 endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                name: "Edituserroles",
+                pattern: "UserRoles/{id?}",
+                defaults: new { controller = "Identity", action = "Index" });
+
+                endpoints.MapControllerRoute(
+                name: "CreateRoles",
+                pattern: "CreateRole/{id?}",
+                defaults: new { controller = "Identity", action = "Create" });
+
+                endpoints.MapControllerRoute(
+                name: "UpdateRoles",
+                pattern: "UpdateRole/{id?}",
+                defaults: new { controller = "Identity", action = "Update" });
+
+                endpoints.MapControllerRoute(
+                name: "CheckIfRolesExist",
+                pattern: "IsRolesEmpty/{id?}",
+                defaults: new { controller = "Identity", action = "IsRolesEmpty" });
+
+
             });
         }
     }

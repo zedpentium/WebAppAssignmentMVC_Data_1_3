@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace WebAppAssignmentMVC_Data_1_3.Models
+namespace WebAppAssignmentMVC_Data_1_3.Models.ViewModels
 {
 
     public class PersonLanguageViewModel

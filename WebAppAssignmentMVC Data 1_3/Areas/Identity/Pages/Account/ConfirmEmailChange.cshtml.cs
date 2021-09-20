@@ -8,16 +8,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
 
 namespace WebAppAssignmentMVC_Data_1_3.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class ConfirmEmailChangeModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityAppUsers> _userManager;
+        private readonly SignInManager<IdentityAppUsers> _signInManager;
 
-        public ConfirmEmailChangeModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public ConfirmEmailChangeModel(UserManager<IdentityAppUsers> userManager, SignInManager<IdentityAppUsers> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

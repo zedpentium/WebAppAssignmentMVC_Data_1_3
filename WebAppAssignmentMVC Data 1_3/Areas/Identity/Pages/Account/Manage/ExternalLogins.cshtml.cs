@@ -6,17 +6,18 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
 
 namespace WebAppAssignmentMVC_Data_1_3.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityAppUsers> _userManager;
+        private readonly SignInManager<IdentityAppUsers> _signInManager;
 
         public ExternalLoginsModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<IdentityAppUsers> userManager,
+            SignInManager<IdentityAppUsers> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

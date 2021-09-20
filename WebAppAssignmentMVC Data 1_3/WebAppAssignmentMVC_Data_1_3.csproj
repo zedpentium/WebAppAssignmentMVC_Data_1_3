@@ -5,6 +5,7 @@
     <StartupObject></StartupObject>
     <RootNamespace>WebAppAssignmentMVC_Data_1_3</RootNamespace>
     <AssemblyName>WebAppAssignmentMVC Data 1_3</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.18" />
@@ -31,7 +32,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Folder Include="Migrations\Identity\" />
   </ItemGroup>
 
 </Project>

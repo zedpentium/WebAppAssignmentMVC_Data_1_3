@@ -83,45 +83,6 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
                 .WithMany(c => c.PersonLanguages)
                 .HasForeignKey(ec => ec.LanguageId);
 
-
-
-          /*  modelBuilder.Entity<Person>()
-                .HasMany(t => t.Languages)
-                .WithMany(t => t.Courses)
-    .Map(m =>
-    {
-        m.ToTable("PersonLanguage");
-        m.MapLeftKey("PersonId");
-        m.MapRightKey("LanguageId");
-    });
-          */
-
-
-
-
-            /* modelBuilder.Entity<Person>()
-                 .HasMany(x => x.Languages)
-                 .WithMany<Person>(x => x.People)
-                 .UsingEntity<PersonLanguage>(
-                     x => x.HasOne(x => x.Language)
-                     .WithMany().HasForeignKey(x => x.LanguageId),
-                     x => x.HasOne(x => x.Person)
-                    .WithMany().HasForeignKey(x => x.PersonId));*/
-
-
-
-
-
-
-            /*modelBuilder.Entity<PersonLanguage>()  Is not needed coz, 2 one-to many, and joining entity with same names is enough /ER 
-                .HasOne(pt => pt.Person)
-                .WithMany(p => p.PersonLanguages)
-                .HasForeignKey(pt => pt.PersonId);
-
-            modelBuilder.Entity<PersonLanguage>()
-                .HasOne(pt => pt.Language)
-                .WithMany(t => t.PersonLanguages)
-                .HasForeignKey(pt => pt.LanguageId);*/
         }
 
 

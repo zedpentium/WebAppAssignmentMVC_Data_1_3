@@ -1,13 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppAssignmentMVC_Data_1_3.Models;
+using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
+using WebAppAssignmentMVC_Data_1_3.Models.Interfaces;
 
 namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
+    [Authorize]// (Roles = "Admin")]
     public class CityController : Controller
     {
         private readonly ICityService _cityService;

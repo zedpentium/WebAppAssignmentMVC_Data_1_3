@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebAppAssignmentMVC_Data_1_3.Models
+namespace WebAppAssignmentMVC_Data_1_3.Models.Interfaces
 {
     public interface ICountryRepo
     {

@@ -1,5 +1,10 @@
 ﻿@model PeopleViewModel
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityAppUsers> SignInManager
+@inject UserManager<IdentityAppUsers> UserManager
+
+
 <div>
     <h4>Add & Edit Person</h4>
 
@@ -53,13 +58,13 @@
                         <select asp-for="PersonCity">
                             <option value="" disabled>Select a City</option>
                             @{
-                                if (Model.CityListView != null)
-                                {
-                                    foreach (City city in Model.CityListView)
+                                    if (Model.CityListView != null)
                                     {
-                                        <option value="@city.CityId">@city.CityName</option>
+                                        foreach (City city in Model.CityListView)
+                                        {
+                                <option value="@city.CityId">@city.CityName</option>
+                                        }
                                     }
-                                }
                             }
                         </select>
                         <br />
@@ -77,7 +82,8 @@
 
     <br />
     <div>
-        @{ <partial name="_PeopleListPartial" model="Model" />}
+        @{  <partial name="_PeopleListPartial" model="Model" />}
     </div>
 
 </div>
+                

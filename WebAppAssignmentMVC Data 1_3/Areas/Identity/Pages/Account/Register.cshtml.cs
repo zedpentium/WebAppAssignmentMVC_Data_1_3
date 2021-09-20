@@ -13,20 +13,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
+
 
 namespace WebAppAssignmentMVC_Data_1_3.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityAppUsers> _signInManager;
+        private readonly UserManager<IdentityAppUsers> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<IdentityAppUsers> userManager,
+            SignInManager<IdentityAppUsers> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -49,6 +51,26 @@ namespace WebAppAssignmentMVC_Data_1_3.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+
+            //Added FirstName, LastName and BirthDate /ER
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+            [DataType(DataType.Text)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(30, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+            [DataType(DataType.Text)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Required]
+            [StringLength(30, ErrorMessage = "The {0} must be at Birthdate of at least 6 numbers.", MinimumLength = 6)]
+            [DataType(DataType.Date)]
+            [Display(Name = "BirthDate")]
+            public string BirthDate { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -74,7 +96,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new IdentityAppUsers { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, BirthDate = Input.BirthDate }; //Added FirstName,LastName and BirthDate /ER
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

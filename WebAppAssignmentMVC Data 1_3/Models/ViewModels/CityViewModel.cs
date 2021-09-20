@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebAppAssignmentMVC_Data_1_3.Models
+namespace WebAppAssignmentMVC_Data_1_3.Models.ViewModels
 {
 
     public class CityViewModel : CreateCityViewModel

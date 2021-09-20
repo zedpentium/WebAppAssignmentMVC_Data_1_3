@@ -5,15 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
 
-namespace WebAppAssignmentMVC_Data_1_3.Data
+namespace WebAppAssignmentMVC_Data_1_3.Areas.Identity.Data
 {
-    public class IdentityContext : IdentityDbContext<IdentityUser>
+    public class AppIdentityDbContext : IdentityDbContext<IdentityAppUsers>
     {
-        public IdentityContext(DbContextOptions<IdentityContext> options)
-            : base(options)
-        {
-        }
+        public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options)
+        { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

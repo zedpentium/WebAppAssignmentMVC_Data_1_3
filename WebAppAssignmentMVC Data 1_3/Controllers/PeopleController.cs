@@ -3,13 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebAppAssignmentMVC_Data_1_3.Models;
-using WebAppAssignmentMVC_Data_1_3.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using WebAppAssignmentMVC_Data_1_3.TagHelpers;
+using WebAppAssignmentMVC_Data_1_3.Models;
+using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
+using WebAppAssignmentMVC_Data_1_3.Models.Interfaces;
 
 namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
+    [Authorize]
     public class PeopleController : Controller
     {
 
@@ -28,19 +32,47 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
             _languageService = languageService;
         }
 
-
+        [Authorize]//(Roles = "RegisteredUser, User, Admin")]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string checkDone = "")
         {
+            CheckIfEmptyIdentityUserRoles();
+
+            switch (checkDone)
+            {
+                case "EMPTY":
+                    ViewBag.Mess = "UserRoles was empty, so added Admin.";
+                    break;
+
+                case "ERRORCouldNotMakeAdmin":
+                    ViewBag.Mess = "Error! UserRole \"Admin\" could not be added, (userRoles are empty).";
+                    break;
+
+                case "ROLEExist":
+                    ViewBag.Mess = "UserRoles exists. Nothing done.";
+                    break;
+
+                default:
+                    ViewBag.Mess = "Check if Roles exists failed!!!";
+                    break;
+            }
+
+
+
             PeopleViewModel peopleViewModel = CheckIfEmptyDBTables(); // Check if certain DB-Tables are empty. If yes, then add some.";
 
             CreatePersonViewModel citylist = new CreatePersonViewModel() { Cities = peopleViewModel.CityListView };
 
-            ViewBag.Mess = TempData["Deletemess"];
+            if (TempData["Deletemess"] != null) // If there is a message set. Copy it to ViewBag.Mess
+            {
+                ViewBag.Mess = TempData["Deletemess"];
+                TempData["Deletemess"] = null;
+            }
 
             return View("Index", peopleViewModel);
         }
 
+        [Authorize]// (Roles = "RegisteredUser, User, Admin")]
         [HttpPost]
         public IActionResult Index(PeopleViewModel peopleViewModel) //Find by model
         {
@@ -52,10 +84,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
             peopleViewModel2.PersonPhoneNumber = peopleViewModel.PersonPhoneNumber;
             peopleViewModel2.CityListView = peopleViewModel.CityListView;*/
 
-            return View("Index", peopleViewModel); 
+            return View("Index", peopleViewModel);
         }
 
-
+        [Authorize]//(Roles = "RegisteredUser, User, Admin")]
         [HttpPost]
         public IActionResult CreatePerson(CreatePersonViewModel createPersonViewModel) // set / HttpPost
         {
@@ -72,22 +104,23 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 
 
             if (ModelState.IsValid)
-                {
+            {
 
                 _peopleService.Add(createPersonViewModel);
 
-                    ViewBag.Mess = "Person Added!";
+                ViewBag.Mess = "Person Added!";
 
                 peopleViewModel.PeopleListView = _peopleService.All().PeopleListView;
 
                 return View("Index", peopleViewModel);
-                }
+            }
 
             peopleViewModel.PeopleListView = _peopleService.All().PeopleListView;
 
             return View("index", peopleViewModel);
         }
 
+        [Authorize]//(Roles = "Admin")]
         [HttpPost]
         public IActionResult DeletePerson(int id)
         {
@@ -100,6 +133,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 
 
         // ---------------  Special Actions below ---------------
+        [Authorize]
         [HttpPost]
         public IActionResult PersonDetails(int id)
         {
@@ -109,6 +143,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         }
 
 
+
+        [Authorize]//(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddLanguageView(int id)
         {
@@ -126,7 +162,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         }
 
 
-
+        [Authorize]//(Roles = "Admin")]
         public IActionResult AddLanguageToPerson(PersonLanguageViewModel personLanguageViewModel)
         {
             Person person = _peopleService.FindBy(personLanguageViewModel.PersonId);
@@ -150,6 +186,17 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
             return View("AddLanguagesToPerson", personLanguageViewModel);
         }
 
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+
+        public IActionResult CheckIfEmptyIdentityUserRoles()
+        {
+            return RedirectToAction("IsRolesEmpty", "Identity");
+        }
 
 
         // -------------- Normal Methods below -------------------
@@ -214,7 +261,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
                 Language personLangID = listPeronsLang.Find(id => id.LanguageId == languageItem.LanguageId);
 
                 if (personLangID != null) // IsSelected is True if equal, false if not equal
-                { IsSelected = languageItem.LanguageId == personLangID.LanguageId; } 
+                { IsSelected = languageItem.LanguageId == personLangID.LanguageId; }
                 else { IsSelected = false; }
 
                 SelectListItem selectList = new SelectListItem()

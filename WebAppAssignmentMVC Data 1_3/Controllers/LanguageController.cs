@@ -1,13 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppAssignmentMVC_Data_1_3.Models;
+using WebAppAssignmentMVC_Data_1_3.Models.Interfaces;
+using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
 
 namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
+    [Authorize]//(Roles = "RegisteredUser, User, Admin")]
+
     public class LanguageController : Controller
     {
         private readonly ILanguageService _languageService;

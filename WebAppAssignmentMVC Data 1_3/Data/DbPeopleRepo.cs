@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppAssignmentMVC_Data_1_3.Models;
+using WebAppAssignmentMVC_Data_1_3.Models.Interfaces;
+using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
 
 namespace WebAppAssignmentMVC_Data_1_3.Data
 {
@@ -45,10 +47,10 @@ namespace WebAppAssignmentMVC_Data_1_3.Data
 
             // Make new list of PersonLanguage associated with that PersonId above.
             // And make the correct object-path build.   Person.List<PersonLanguage>.PersonLanguage.Language 
-            var addPersonLang = new List<PersonLanguage> { };
+            List<PersonLanguage> addPersonLang = new List<PersonLanguage> { };
 
                     foreach (string id in personLanguageViewModel.SelectedListBoxView)
-                {
+                 {
                     foundLang = dbLangList.Find(la => la.LanguageId == Convert.ToInt32(id));
                     PersonLanguage personLanguage = new PersonLanguage() { Language = foundLang };
                     addPersonLang.Add(personLanguage);

@@ -5,10 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppAssignmentMVC_Data_1_3.Models;
-using WebAppAssignmentMVC_Data_1_3.Data;
+using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
+using WebAppAssignmentMVC_Data_1_3.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
+    [Authorize]//(Roles = "RegisteredUser, User, Admin")]
+
     public class AjaxController : Controller
     {
         //All new PeopleService() is now replaced by DI via this Constructor, and using _peopleService instead /ER
