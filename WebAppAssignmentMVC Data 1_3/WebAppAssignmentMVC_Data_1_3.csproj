@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <StartupObject></StartupObject>
     <RootNamespace>WebAppAssignmentMVC_Data_1_3</RootNamespace>
-    <AssemblyName>WebAppAssignmentMVC Data 1_3</AssemblyName>
+    <AssemblyName>WebAppAssignmentMVC-Data-1-3</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>

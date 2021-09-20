@@ -11,6 +11,9 @@
     <div>
         <div>
             <p>@ViewBag.BaseLanguageList, @ViewBag.BaseCountryList, @ViewBag.BaseCityList, @ViewBag.BasePersonList </p>
+            <p>Click button below to Add 2 Roles the first time (Admin & User). Then add users to "Admin" and "Users" roles:</p>
+            <button class="btn btn-primary" asp-controller="Identity" asp-action="IsRolesEmpty">Add 2 Roles.</button>
+            <br />
             <br />
         </div>
     </div>

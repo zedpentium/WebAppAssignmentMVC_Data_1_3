@@ -10,11 +10,12 @@ namespace WebAppAssignmentMVC_Data_1_3.Models.Services
 {
     public class IdentityService
     {
+        /*
         public void CheckIfEmptyIdentityUserRoles()
         {
             //return RedirectToAction("IsRolesEmpty", "Identity");
         }
-
+        */
 
 
             /*
@@ -93,8 +94,8 @@ namespace WebAppAssignmentMVC_Data_1_3.Models.Services
                 _cityRepo.Create("Trondheim", countries[1]);
                 _cityRepo.Create("Kelontekemä", countries[2]);
                 _cityRepo.Create("Eindhoven", countries[3]);
-            }
+            }*/
 
-            */
+            
         }
 }

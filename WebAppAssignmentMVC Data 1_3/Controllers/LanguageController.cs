@@ -11,7 +11,7 @@ using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
 
 namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
-    [Authorize]//(Roles = "RegisteredUser, User, Admin")]
+    [Authorize(Roles = "User, Admin")]
 
     public class LanguageController : Controller
     {

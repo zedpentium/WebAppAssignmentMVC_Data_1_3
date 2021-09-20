@@ -1,12 +1,10 @@
 ﻿using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
-using Microsoft.AspNetCore.Razor.Runtime.TagHelpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Collections.Generic;
-using WebAppAssignmentMVC_Data_1_3.Areas.Identity;
 using System.Threading.Tasks;
 
-namespace WebAppAssignmentMVC_Data_1_3.TagHelpers
+namespace WebAppAssignmentMVC_Data_1_3.Helpers
 {
     [HtmlTargetElement("td", Attributes = "i-role")]
     public class RoleUsersTH : TagHelper

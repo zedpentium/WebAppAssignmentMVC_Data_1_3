@@ -11,7 +11,7 @@ using WebAppAssignmentMVC_Data_1_3.Models.Interfaces;
 
 namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
-    [Authorize]// (Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class CityController : Controller
     {
         private readonly ICityService _cityService;

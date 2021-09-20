@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
-using WebAppAssignmentMVC_Data_1_3.TagHelpers;
 using WebAppAssignmentMVC_Data_1_3.Models;
 using WebAppAssignmentMVC_Data_1_3.Models.ViewModels;
 using WebAppAssignmentMVC_Data_1_3.Models.Interfaces;
@@ -32,11 +31,11 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
             _languageService = languageService;
         }
 
-        [Authorize]//(Roles = "RegisteredUser, User, Admin")]
+        [Authorize]
         [HttpGet]
         public IActionResult Index(string checkDone = "")
         {
-            CheckIfEmptyIdentityUserRoles();
+            // CheckIfEmptyUserRoles() does not work. The RedirectToAction in this method refuses to work so, addign a button for that action!
 
             switch (checkDone)
             {
@@ -72,7 +71,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
             return View("Index", peopleViewModel);
         }
 
-        [Authorize]// (Roles = "RegisteredUser, User, Admin")]
+        [Authorize]
         [HttpPost]
         public IActionResult Index(PeopleViewModel peopleViewModel) //Find by model
         {
@@ -87,7 +86,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
             return View("Index", peopleViewModel);
         }
 
-        [Authorize]//(Roles = "RegisteredUser, User, Admin")]
+        [Authorize(Roles = "Admin, User")]
         [HttpPost]
         public IActionResult CreatePerson(CreatePersonViewModel createPersonViewModel) // set / HttpPost
         {
@@ -120,7 +119,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
             return View("index", peopleViewModel);
         }
 
-        [Authorize]//(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         [HttpPost]
         public IActionResult DeletePerson(int id)
         {
@@ -144,7 +143,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
 
 
 
-        [Authorize]//(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         [HttpPost]
         public IActionResult AddLanguageView(int id)
         {
@@ -162,7 +161,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         }
 
 
-        [Authorize]//(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
         public IActionResult AddLanguageToPerson(PersonLanguageViewModel personLanguageViewModel)
         {
             Person person = _peopleService.FindBy(personLanguageViewModel.PersonId);
@@ -193,7 +192,7 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
         }
 
 
-        public IActionResult CheckIfEmptyIdentityUserRoles()
+        public RedirectToActionResult CheckIfEmptyUserRoles()
         {
             return RedirectToAction("IsRolesEmpty", "Identity");
         }

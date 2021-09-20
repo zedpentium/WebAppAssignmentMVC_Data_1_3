@@ -14,7 +14,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebAppAssignmentMVC_Data_1_3.Controllers
 {
-    //[Authorize]//(Roles = "Admin")]
+    [Authorize]//(Roles = "Admin")]
     public class IdentityController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
@@ -140,16 +140,27 @@ namespace WebAppAssignmentMVC_Data_1_3.Controllers
                                        // ERRORCouldNotMakeAdmin = something went wrong when creating role "Admin"
                                        // ROLEExist = there is 1 or more roles
 
-            if (roleManager.Roles != null)
+            int nrOfRoles = 0;
+
+            foreach (var role in roleManager.Roles)
+            {
+                nrOfRoles++;
+            }
+
+            if (nrOfRoles == 0 )
             {
                 string roleName = "Admin";
                 IdentityResult result = await roleManager.CreateAsync(new IdentityRole(roleName));
+                string roleName2 = "User";
+                IdentityResult result2 = await roleManager.CreateAsync(new IdentityRole(roleName2));
+
                 if (result.Succeeded)
                 { existOrCreateAdmin = "EMPTY"; }
                 else
                 {
                     Errors(result);
                     existOrCreateAdmin = "ERRORCouldNotMakeAdmin";
+                    ViewBag.Mess = "ERRORCouldNotMakeAdmin";
                 }
                 return RedirectToAction("Index", "People", new { checkIsDoneResult = existOrCreateAdmin });
             }

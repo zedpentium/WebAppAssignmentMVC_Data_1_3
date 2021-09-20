@@ -34,23 +34,14 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Ajax" asp-action="Index">AjaxView</a>
-                        </li>
-                        <li class="nav-item">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            @{/* if (User.IsInRole("Admin"))
+                                { */}
+                                <a class="nav-link" asp-controller="Identity" asp-action="Index">Edit_UserRoles</a>
                         </li>
                         <li class="nav-item">
                             <partial name="_LoginPartial" />
                         </li>
-                        <li class="nav-item">
-                            @{/* if (User.IsInRole("Admin"))
-                                { */}
-                                <a class="nav-item" asp-controller="Identity" asp-action="Index">Edit UserRoles</a>
-
-
-                        </li>
                     </ul>
-
                 </div>
                 <div id="actionMessage">@ViewBag.Mess</div>
 

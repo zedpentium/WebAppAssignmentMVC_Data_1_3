@@ -1,6 +1,6 @@
 ﻿@model IdentityRoleEdit
 
-<h1 class="bg-info text-white">Update Role</h1>
+<h1 class="bg-dark text-light">Update Role</h1>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -8,7 +8,7 @@
     <input type="hidden" name="roleName" value="@Model.Role.Name" />
     <input type="hidden" name="roleId" value="@Model.Role.Id" />
 
-    <h2 class="bg-info p-1 text-white">Add To @Model.Role.Name</h2>
+    <h2 class="bg-dark text-light p-1">Add To @Model.Role.Name</h2>
     <table class="table table-bordered table-sm">
         @if (Model.NonMembers.Count() == 0)
         {
@@ -28,7 +28,7 @@
         }
     </table>
 
-    <h2 class="bg-info p-1 text-white">Remove From @Model.Role.Name</h2>
+    <h2 class="bg-dark text-light p-1">Remove From @Model.Role.Name</h2>
     <table class="table table-bordered table-sm">
         @if (Model.Members.Count() == 0)
         {

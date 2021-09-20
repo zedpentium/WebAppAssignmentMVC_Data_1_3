@@ -24,5 +24,6 @@ namespace WebAppAssignmentMVC_Data_1_3
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }
