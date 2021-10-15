@@ -12,6 +12,7 @@ using WebAppAssignmentMVC_Data_ER.Models.Interfaces;
 using System.Text.Json;
 using System.Collections;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace WebAppAssignmentMVC_Data_ER.Controllers
 {
@@ -27,6 +28,7 @@ namespace WebAppAssignmentMVC_Data_ER.Controllers
         private readonly ILanguageService _languageService;
 
         private static List<Person> _listOfPersons;
+        private static List<City> _listOfCities;
 
 
         public ReactController(IPeopleService peopleService, ICityService cityService, ICountryService countryService, ILanguageService languageService)
@@ -45,35 +47,10 @@ namespace WebAppAssignmentMVC_Data_ER.Controllers
         }
 
 
-
-        [Authorize]
-        [HttpPost]
-        public IActionResult Index(PeopleViewModel peopleViewModel) //Find by model
-        {
-            //PeopleViewModel peopleViewModel2 = new PeopleViewModel();
-            //peopleViewModel2 = peopleViewModel;
-            peopleViewModel = _peopleService.FindBy(peopleViewModel);
-
-
-            /*peopleViewModel2.PersonName = peopleViewModel.PersonName;
-            peopleViewModel2.PersonPhoneNumber = peopleViewModel.PersonPhoneNumber;
-            peopleViewModel2.CityListView = peopleViewModel.CityListView;*/
-
-            return View("Index", peopleViewModel);
-        }
-
-
-
-
-
-
-
         [Authorize(Roles = "Admin, User")]
-        [HttpPost]
-        public IActionResult CreatePerson(CreatePersonViewModel createPersonViewModel) // set / HttpPost
+        [HttpPost("[controller]/CreatePerson")]
+        public ActionResult<PeopleViewModel> CreatePerson([FromBody] CreatePersonViewModel createPersonViewModel) // set / HttpPost
         {
-
-
             PeopleViewModel peopleViewModel = new PeopleViewModel();
 
             List<City> cityL = _cityService.All().CityListView;
@@ -82,24 +59,27 @@ namespace WebAppAssignmentMVC_Data_ER.Controllers
             peopleViewModel.PersonName = createPersonViewModel.PersonName;
             peopleViewModel.PersonPhoneNumber = createPersonViewModel.PersonPhoneNumber;
             peopleViewModel.CityListView = cityL;
+            
 
-
-            if (ModelState.IsValid)
+            try
             {
+                if (ModelState.IsValid)
+                {
+                    _peopleService.Add(createPersonViewModel);
 
-                _peopleService.Add(createPersonViewModel);
-
-                ViewBag.Mess = "Person Added!";
-
-                peopleViewModel.PeopleListView = _peopleService.All().PeopleListView;
-
-                return View("Index", peopleViewModel);
+                    return new OkResult();
+                    //return Json(createPersonViewModel);
+                }
+            }
+            catch (DataException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
 
-            peopleViewModel.PeopleListView = _peopleService.All().PeopleListView;
-
-            return View("index", peopleViewModel);
+            //return Json(createPersonViewModel);
+            return new NotFoundResult();
         }
+
 
         [Authorize(Roles = "Admin, User")]
         [HttpPost]
@@ -166,8 +146,9 @@ namespace WebAppAssignmentMVC_Data_ER.Controllers
         }
 
 
-        // -------------   Reactjs Json route ----------------------
-        [Route("Reactjson")] // Building Personlist to Json API
+        // -------------   Reactjsapi Json route ----------------------
+
+        [Route("Reactjsonpersonlist")] // Building Personlist to Json API
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult PersonsList()
         {
@@ -175,6 +156,13 @@ namespace WebAppAssignmentMVC_Data_ER.Controllers
             return Json(_listOfPersons);
         }
 
+        [Route("Reactjsoncitylist")] // Building Personlist to Json API
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult CityList()
+        {
+            _listOfCities = _cityService.All().CityListView;
+            return Json(_listOfCities);
+        }
     }
 
 }

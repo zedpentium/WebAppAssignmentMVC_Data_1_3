@@ -10,8 +10,13 @@
                 <br/>
                 <h4 id='title'>React Peoplelist shown in Table.</h4>
                 <p>(click on tablehead "PersonID" or "Name" to sort them ascending)</p>
-                <br/>                
-                <RenderTable personlistdatastate={this.props.personlistdatastate} setPersonobjstate={this.props.setPersonobjstate} setViewPage={this.props.setViewPage} />
+                <br />
+                <button type="button" onClick={() => createPersonClick(this.props.setViewPage)} >
+                    Create new Person
+                </button>
+                <br />
+                <br />
+                <RenderTable personliststate={this.props.personliststate} setPersonobjstate={this.props.setPersonobjstate} setViewPage={this.props.setViewPage} />
            </div>
         )
     }
@@ -19,13 +24,13 @@
 } // class end tag
 
 
-const RenderTable = ({ personlistdatastate, setPersonobjstate, setViewPage }) => {
+const RenderTable = ({ personliststate, setPersonobjstate, setViewPage }) => {
     //React.useMemo(() => {
     const [sortedField, setSortedField] = React.useState("")
     const [sortedFieldIdArrow, setSortedFieldIdArrow] = React.useState("↓")
     const [sortedFieldNameArrow, setSortedFieldNameArrow] = React.useState("")
 
-        let sortedProducts = personlistdatastate
+        let sortedProducts = personliststate
         if (sortedField !== "") {
             sortedProducts.sort((first, second) => {
                 if (first[sortedField] < second[sortedField]) {
@@ -89,11 +94,14 @@ const RenderTable = ({ personlistdatastate, setPersonobjstate, setViewPage }) =>
 
 
 function personDetailsClick(personobj, setPersonobjstate, setViewPage) {
-    console.log(personobj.personId)
+    //console.log(personobj.personId)
     setPersonobjstate(personobj)
     setViewPage("persondetails")
 };
 
+function createPersonClick(setViewPage) {
+    setViewPage("createperson")
+};
 
 
 

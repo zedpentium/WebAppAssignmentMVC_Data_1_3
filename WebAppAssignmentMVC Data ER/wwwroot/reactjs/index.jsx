@@ -5,30 +5,41 @@
         //this.setViewPage = this.setViewPage.bind(this)  dont need to bind when doing arrows jsx below /ER
         //this.setPersonobjstate = this.setPersonobjstate.bind(this)
         this.state = {
-            personlistdata: [],
+            personliststate: [],
+            cityliststate: [],
             view: "peoplelisttable",
             personobj: [],
-            peoplelistapiurl: "/Reactjson"
+            peoplelistapiurl: "/Reactjsonpersonlist",
+            citylistapiurl: "/Reactjsoncitylist"
         }
     }
 
 
 
     loadDataFromServer = () => {
-       /* axios.get(this.state.peoplelistapiurl)
-            .then(dbdata => {
-                this.setState({ personlistdata: dbdata });
-            })
-            .catch(e => {
-                console.log(e)
-            });*/
        const xhr = new XMLHttpRequest();
         xhr.open('get', this.state.peoplelistapiurl, true)
         xhr.onload = () => {
-            const data = JSON.parse(xhr.responseText)
-            this.setState({ personlistdata: data })
+            const personlist = JSON.parse(xhr.responseText)
+            this.setState({ personliststate: personlist })
         }
         xhr.send()
+
+        const xhr2 = new XMLHttpRequest();
+        xhr2.open('get', this.state.citylistapiurl, true)
+        xhr2.onload = () => {
+            const citylist = JSON.parse(xhr2.responseText)
+            this.setState({ cityliststate: citylist })
+        }
+        xhr2.send()
+
+        /* axios.get(this.state.peoplelistapiurl)
+     .then(dbdata => {
+         this.setState({ personlistdata: dbdata });
+     })
+     .catch(e => {
+         console.log(e)
+     });*/
     }
 
 
@@ -51,7 +62,8 @@
         <div>
                 <ChangeView
                     viewpagestate={this.state.view}
-                    personlistdatastate={this.state.personlistdata}
+                    personliststate={this.state.personliststate}
+                    cityliststate={this.state.cityliststate}
                     setViewPage={this.setViewPage}
                     loadDataFromServer={this.loadDataFromServer}
                     setPersonobjstate={this.setPersonobjstate}
@@ -63,18 +75,25 @@
 
 } // class end tag
 
-const ChangeView = ({ viewpagestate, personlistdatastate, setViewPage, loadDataFromServer, setPersonobjstate, personobj }) => {
+const ChangeView = ({ viewpagestate, personliststate, cityliststate, setViewPage, loadDataFromServer, setPersonobjstate, personobj }) => {
     return (
         <SwitchComponents active={viewpagestate}>
             <Peoplelisttable
                 name="peoplelisttable"
-                personlistdatastate={personlistdatastate}
+                personliststate={personliststate}
                 setViewPage={setViewPage}
                 setPersonobjstate={setPersonobjstate}
             />
             <Persondetails
                 name="persondetails"
-                personlistdatastate={personlistdatastate}
+                personliststate={personliststate}
+                setViewPage={setViewPage}
+                loadDataFromServer={loadDataFromServer}
+                personobj={personobj}
+            />
+            <CreatePerson
+                name="createperson"
+                cityliststate={cityliststate}
                 setViewPage={setViewPage}
                 loadDataFromServer={loadDataFromServer}
                 personobj={personobj}

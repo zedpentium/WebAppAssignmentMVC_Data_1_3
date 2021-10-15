@@ -27,6 +27,23 @@ body {
         color: #EA4747;
     }
 
+    .flexwrap #legbox {
+        text-align: left;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #fff;
+        background-color: #87898A;
+        padding: 3px 6px;
+    }
+
+    .flexwrap #divboxtitle {
+        text-align: left;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #fff;
+        background-color: black;
+        padding: 3px 6px;
+    }
 
 .flexwrap2 > div {
     width: 450px;
@@ -40,14 +57,6 @@ body {
     color: #EA4747;
 }
 
-.flexwrap #legbox {
-    text-align: left;
-    font-size: 12px;
-    text-transform: uppercase;
-    color: #fff;
-    background-color: #000;
-    padding: 3px 6px;
-}
 
 .flexwrap2 #legbox {
     text-align: left;
@@ -138,6 +147,10 @@ body {
 .col {
     line-height: 100px;
     border: 1px solid black;
+}
+
+.nav-item {
+    color: white;
 }
 
 .divwrapper {
@@ -275,9 +288,7 @@ div#navmenuright {
     margin: auto;
 }
 
-.nav-item {
-    color: white;
-}
+
 
 #reactdivcontainer {
     max-height: 398px;
@@ -294,6 +305,11 @@ div#navmenuright {
     flex-wrap: nowrap;
     justify-content: left;
 }
+
+#reactformcreateperson {
+    background-color: #87898A;
+}
+
 
 #reactformsubmitbuttondiv {
     max-width: 200px;

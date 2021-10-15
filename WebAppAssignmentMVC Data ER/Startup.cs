@@ -195,11 +195,16 @@ namespace WebAppAssignmentMVC_Data_ER
                 defaults: new { controller = "React", action = "Index" });
 
                 endpoints.MapControllerRoute(
-                name: "Reactapi",
-                pattern: "Reactjson/{id?}",
+                name: "Reactpeoplelistapi",
+                pattern: "Reactjsonpersonlist/{id?}",
                 defaults: new { controller = "React", action = "PersonsList" });
 
-             });
+                endpoints.MapControllerRoute(
+                name: "Reactcitylistapi",
+                pattern: "Reactjsoncitylist/{id?}",
+                defaults: new { controller = "React", action = "CityList" });
+
+            });
         }
     }
 }

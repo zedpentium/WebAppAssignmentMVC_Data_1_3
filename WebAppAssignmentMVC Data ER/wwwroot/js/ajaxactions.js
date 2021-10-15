@@ -30,10 +30,6 @@ function deletePersonById() {
         .fail(function () {
             document.getElementById("jsmessage").textContent = "FAILED to Delete Person. (Does not exist).";
         })
-        .error(function () {
-            document.getElementById("jsmessage").textContent = "Some error has occured.";
-        });
-
 }
 
 

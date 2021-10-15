@@ -14,7 +14,7 @@ namespace WebAppAssignmentMVC_Data_ER.Models.ViewModels
         public string PersonName { get; set; }
 
 
-        [DataType(DataType.PhoneNumber)]
+        [DataType(DataType.Text)]
         [Required(ErrorMessage = "* Please enter phonenumber"), MaxLength(30)]
         [Display(Name = "PhoneNumber")]
         public string PersonPhoneNumber { get; set; }

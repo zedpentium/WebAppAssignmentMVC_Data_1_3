@@ -26,7 +26,7 @@ namespace WebAppAssignmentMVC_Data_ER.Data
             Person newPerson = new Person(personName, personPhoneNumber, city);
 
             _peopleListContext.Add(newPerson);
-            _peopleListContext.SaveChanges();
+             _peopleListContext.SaveChanges();
 
             return newPerson;
         }

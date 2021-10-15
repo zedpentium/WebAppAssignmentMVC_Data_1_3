@@ -24,7 +24,7 @@
                 Languages:
                 <br />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <select size="5" disabled multiple="multiple">
+                <select id="SelectedListBoxView" size="5" disabled multiple="multiple">
                     {this.props.personobj.personLanguages.map((listitem) => (
                         <option key={listitem.language.languageId} value={listitem.language.languageId}>{listitem.language.languageName}</option>
                         ))}
