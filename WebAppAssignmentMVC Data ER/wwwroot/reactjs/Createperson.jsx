@@ -5,7 +5,7 @@
             createperson: {
                 PersonName: "",
                 PersonPhoneNumber: "",
-                CityId: 0
+                PersonCity: 0
             }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,7 +48,7 @@
                     <label>
                     City (country is allready linked to city:
                             <div><select id="SelectedListBoxView" defaultValue={"ChooseCity"}
-                            onChange={e => { this.setState({ createperson: { ...this.state.createperson, CityId: parseInt(e.target.value) } }) }}
+                            onChange={e => { this.setState({ createperson: { ...this.state.createperson, PersonCity: parseInt(e.target.value) } }) }}
                             required >
 
                             <option value="ChooseCity" disabled> - Choose City -</option>
@@ -82,26 +82,24 @@
 function onSubmitCreatePerson(createdpersonobj, loadDataFromServer, setViewPage) {
 
     let createdpersonjson = JSON.stringify(createdpersonobj)
-    console.log(createdpersonjson)
+    //console.log(createdpersonjson)
 
     $.ajax({
         type: "POST",
         url: "/React/CreatePerson",
         data: createdpersonjson,
         success: function (data) {
-            $("#troubleshootinfo").html(data)
+            loadDataFromServer()
+            setViewPage("peoplelisttable")
+            $(window).scrollTop(0)
+            document.getElementById("reactactionmessage").textContent = `New person is now saved.`
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            document.getElementById("reactactionmessage").textContent = `FAILED to create new person.${textStatus} ,  ${errorThrown}`
         },
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         mimeType: "text/html"
     })
-        .done(function () {
-            loadDataFromServer()
-            setViewPage("peoplelisttable")
-            document.getElementById("reactactionmessage").textContent = `New person is now saved.`
-        })
-        .fail(function () {
-            document.getElementById("reactactionmessage").textContent = "FAILED to create new person."
-        });
 
 }

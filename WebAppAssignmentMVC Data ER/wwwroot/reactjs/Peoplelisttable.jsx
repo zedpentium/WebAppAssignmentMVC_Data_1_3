@@ -89,6 +89,7 @@ const RenderTable = ({ personliststate, setPersonobjstate, setViewPage }) => {
             </tbody>
         </table>
     ) //end return
+    $(window).scrollTop(0)
 
 } // end renderTable
 

@@ -49,25 +49,26 @@ namespace WebAppAssignmentMVC_Data_ER.Controllers
 
         [Authorize(Roles = "Admin, User")]
         [HttpPost("[controller]/CreatePerson")]
-        public ActionResult<PeopleViewModel> CreatePerson([FromBody] CreatePersonViewModel createPersonViewModel) // set / HttpPost
+        public IActionResult CreatePerson([FromBody] CreatePersonViewModel createPersonViewModel) // set / HttpPost
         {
-            PeopleViewModel peopleViewModel = new PeopleViewModel();
+            //PeopleViewModel peopleViewModel = new PeopleViewModel();
 
             List<City> cityL = _cityService.All().CityListView;
             createPersonViewModel.Cities = cityL;
 
-            peopleViewModel.PersonName = createPersonViewModel.PersonName;
+            /*peopleViewModel.PersonName = createPersonViewModel.PersonName;
             peopleViewModel.PersonPhoneNumber = createPersonViewModel.PersonPhoneNumber;
-            peopleViewModel.CityListView = cityL;
+            peopleViewModel.CityListView = cityL;*/
             
 
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _peopleService.Add(createPersonViewModel);
+                    Person createdPerson = _peopleService.Add(createPersonViewModel);
 
-                    return new OkResult();
+                    return new OkObjectResult(createdPerson);
+
                     //return Json(createPersonViewModel);
                 }
             }

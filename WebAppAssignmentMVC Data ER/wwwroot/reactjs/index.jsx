@@ -71,7 +71,9 @@
                 />
         </div>
         )
+        $(window).scrollTop(0)
     }
+
 
 } // class end tag
 
@@ -96,7 +98,6 @@ const ChangeView = ({ viewpagestate, personliststate, cityliststate, setViewPage
                 cityliststate={cityliststate}
                 setViewPage={setViewPage}
                 loadDataFromServer={loadDataFromServer}
-                personobj={personobj}
             />
         </SwitchComponents>
     )

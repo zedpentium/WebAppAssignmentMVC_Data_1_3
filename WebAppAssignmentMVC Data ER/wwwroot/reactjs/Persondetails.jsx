@@ -3,6 +3,7 @@
         super(props)
     }
     personInfo() {
+        $(window).scrollTop(0)
         return (
             <div id="#reactcontainer">
                 <div id="reactwrapper">
@@ -31,9 +32,9 @@
                     </select>
                 <br />
                     <div>
-                    <button id="optionBtnGray" onClick={() => this.props.setViewPage("peoplelisttable")}>Back to React Peoplelist</button>
+                    <button id="optionBtnGray" onClick={() => onClickGoBackToList(this.props.setViewPage)}>Back to React Peoplelist</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button id="optionBtnRed" onClick={(e) =>
+                    <button id="optionBtnRed" onClick={() =>
                         window.confirm("Are you sure you wish to delete this person?") &&
                         onClickDeletePerson(this.props.personobj, this.props.setViewPage, this.props.loadDataFromServer)}>
                         Delete this Person
@@ -42,6 +43,7 @@
             </div>
 
         )
+        $(window).scrollTop(0)
     }
 
 
@@ -58,21 +60,26 @@
 
 function onClickDeletePerson(personobj, setViewPage, loadDataFromServer) {
 
-    //var ajaxRequest = 
-    $.post("/React/DeletePerson", { Id: personobj.personId }, function (data) {
-        //$("#ajaxjson").html(data);
-    })
-        .done(function () {
+    $.ajax({
+        type: "POST",
+        url: "/React/DeletePerson",
+        data: "id=" + personobj.personId,
+        success: function (data) {
             loadDataFromServer()
             setViewPage("peoplelisttable")
-            document.getElementById("reactactionmessage").textContent = `Person: ${personobj.personName} with Id: ${personobj.personId}, is now deleted.`
-        })
-        .fail(function() {
-            document.getElementById("reactactionmessage").textContent = `FAILED to Delete: ${personobj.personName}. (Does not exist).`
-        })
-        .always(function() {
-            
-        })
+            document.getElementById("reactactionmessage").textContent =
+                `Person: ${personobj.personName} with Id: ${personobj.personId}, is now deleted.`
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            document.getElementById("reactactionmessage").textContent =
+                `FAILED to Delete: ${personobj.personName}. (Does not exist).`
+        }
 
+    })
 
+}
+
+function onClickGoBackToList(setViewPage) {
+    setViewPage("peoplelisttable")
+    $(window).scrollTop(0)
 }
